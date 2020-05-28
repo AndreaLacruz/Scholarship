@@ -19,11 +19,11 @@ public class CompanyStatusLoaderData implements ApplicationRunner {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CompanyStatusLoaderData.class);
 
-    @Value("${spring.application.env}")
-    private String appEnv;
-
     @Autowired @Qualifier("companyStatusRepository")
     private CompanyStatusRepository companyStatusRepository;
+
+    @Value("${spring.application.env}")
+    private String appEnv;
 
     @Override
     public void run(ApplicationArguments args) throws Exception {
