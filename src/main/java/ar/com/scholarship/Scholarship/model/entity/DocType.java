@@ -23,18 +23,8 @@ public class DocType {
     @OneToMany(mappedBy = "docType")
     private Set<Manager> manager;
 
-    public DocType(Long id) {
-        this.id = id;
-    }
-
     public DocType(Long id, String type) {
         this.id = id;
         this.type = type;
     }
-
-    public DocType setType(String type){
-        this.type = type;
-        return this;
-    }
-
 }
