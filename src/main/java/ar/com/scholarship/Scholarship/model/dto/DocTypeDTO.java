@@ -10,13 +10,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 import java.util.Set;
 
 @Setter @Getter @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonPropertyOrder({"id", "type", "manager"})
-public class DocTypeDTO {
+public class DocTypeDTO implements Serializable {
 
     private Long id;
 
@@ -25,9 +26,4 @@ public class DocTypeDTO {
 
     private Set<Manager> manager;
 
-    public DocTypeDTO(Long id, String type, Set<Manager> manager) {
-        this.id = id;
-        this.type = type;
-        this.manager = manager;
-    }
 }
