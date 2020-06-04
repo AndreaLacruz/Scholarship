@@ -25,4 +25,7 @@ public class StudentStatus {
     @OneToMany(mappedBy = "status")
     private Set<StudentHasCourse> studentHasCourses;
 
+    public StudentStatus(String status) {
+        this.status = status;
+    }
 }

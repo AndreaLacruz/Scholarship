@@ -22,4 +22,7 @@ public class ApplicationType {
     @OneToMany(mappedBy = "applicationType")
     private Set<StudentHasCourse> studentHasCourses;
 
+    public ApplicationType(String type) {
+        this.type = type;
+    }
 }
