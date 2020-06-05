@@ -1,6 +1,5 @@
 package ar.com.scholarship.Scholarship.model.mapper;
 
-import ar.com.scholarship.Scholarship.components.data.ModalityLoaderData;
 import ar.com.scholarship.Scholarship.model.dto.ModalityDTO;
 import ar.com.scholarship.Scholarship.model.entity.Modality;
 import org.mapstruct.Mapper;

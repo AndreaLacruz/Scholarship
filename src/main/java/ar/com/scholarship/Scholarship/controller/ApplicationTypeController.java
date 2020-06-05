@@ -19,7 +19,7 @@ public class ApplicationTypeController {
     @Qualifier("applicationTypeServices")
     private ApplicationTypeServices applicationTypeServices;
 
-    @GetMapping({"", "/"})
+    @GetMapping({"", "/"}) //http://localhost:8080/applicationtype
     public ResponseEntity getAllTypes(){
         List<ApplicationTypeDTO> applicationTypeDTOList = applicationTypeServices.findAll();
         return ResponseEntity.ok(applicationTypeDTOList);
