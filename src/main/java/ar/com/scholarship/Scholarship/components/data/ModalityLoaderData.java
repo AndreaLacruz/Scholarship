@@ -37,6 +37,8 @@ public class ModalityLoaderData implements ApplicationRunner {
                     new Modality(2L, "Presencial"),
                     new Modality(3L, "Combinados")
             );
+
+            modalities.forEach(modality -> modalityRepository.save(modality));
         }
     }
 }

@@ -22,19 +22,8 @@ public class CompanyStatus {
     @OneToMany(mappedBy = "status")
     private Set<Company> company;
 
-    public CompanyStatus(Long id, String status) {
-        this.id = id;
-        this.status = status;
-    }
-
     public CompanyStatus(String status) {
         this.status = status;
     }
 
-
-
-    public CompanyStatus CompanyStatus(String status) {
-        this.status = status;
-        return this;
-    }
 }
