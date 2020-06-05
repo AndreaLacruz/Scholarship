@@ -10,6 +10,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
+import java.util.List;
 
 @Setter
 @Getter
@@ -23,4 +24,6 @@ public class ModalityDTO implements Serializable {
 
     @NotBlank(message = "modality is required")
     private String modality;
+
+    private List<CourseDTO> courses;
 }

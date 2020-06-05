@@ -16,14 +16,26 @@ import java.io.Serializable;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({"id", "type"})
-public class ApplicationTypeDTO implements Serializable {
+@JsonPropertyOrder({"id", "name", "lastName","docType", "documentation", "position", "email", "company"})
+public class ManagerDTO implements Serializable {
 
     private Long id;
 
-    @NotBlank(message = "type is required")
-    private String type;
+    @NotBlank(message = "name is required")
+    private String name;
 
+    @NotBlank(message = "lastName is required")
+    private String lastName;
 
+    @NotBlank(message = "documentation is required")
+    private Integer documentation;
 
+    @NotBlank(message = "position is required")
+    private String position;
+
+    @NotBlank(message = "email is required")
+    private String email;
+
+    private DocTypeDTO docType;
+    private CompanyDTO company;
 }

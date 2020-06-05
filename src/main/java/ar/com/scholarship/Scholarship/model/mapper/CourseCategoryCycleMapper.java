@@ -1,6 +1,5 @@
 package ar.com.scholarship.Scholarship.model.mapper;
 
-import ar.com.scholarship.Scholarship.components.data.CourseCategoryLoaderData;
 import ar.com.scholarship.Scholarship.model.dto.CourseCategoryDTO;
 import ar.com.scholarship.Scholarship.model.entity.CourseCategory;
 import org.mapstruct.Mapper;
