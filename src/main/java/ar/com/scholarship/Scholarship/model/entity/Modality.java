@@ -22,4 +22,8 @@ public class Modality {
     @OneToMany(mappedBy = "modality")
     private List<Course> courses;
 
+    public Modality(Long id, String modality) {
+        this.id = id;
+        this.modality = modality;
+    }
 }
