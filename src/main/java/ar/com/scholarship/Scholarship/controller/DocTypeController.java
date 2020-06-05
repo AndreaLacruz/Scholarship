@@ -18,7 +18,7 @@ public class DocTypeController {
     @Autowired @Qualifier("docTypeServices")
     private DocTypeServices docTypeServices;
 
-    @GetMapping({"", "/"})  //localhost:8080/doctype localhost:8080/doctype/
+    @GetMapping({"", "/"})   //http://localhost:8080/doctype localhost:8080/doctype/
     public ResponseEntity getAllTypes(){
         List<DocTypeDTO> allType = docTypeServices.findAll();
         return ResponseEntity.ok(allType);
