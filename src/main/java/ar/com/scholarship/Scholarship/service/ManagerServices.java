@@ -40,11 +40,13 @@ public class ManagerServices {
     private ManagerCycleMapper managerCycleMapper = ManagerCycleMapper.MAPPER;
 
 
-    public ManagerDTO save(ManagerDTO dto, Long companyId, Long docTypeId) {
+    public ManagerDTO save(ManagerDTO dto) {
+        Long companyId = dto.getCompany().getId();
         Company company = companyRepository
                 .findById(companyId)
                 .orElseThrow(() -> logicExceptionComponent.throwExceptionEntityNotFound("Company", companyId));
 
+        Long docTypeId = dto.getDocType().getId();
         DocType docType = docTypeRepository
                 .findById(docTypeId)
                 .orElseThrow(() -> logicExceptionComponent.throwExceptionEntityNotFound("DocType", docTypeId));
