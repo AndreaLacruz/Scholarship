@@ -1,6 +1,7 @@
 package ar.com.scholarship.Scholarship.service;
 
 import ar.com.scholarship.Scholarship.components.BusinessLogicExceptionComponent;
+import ar.com.scholarship.Scholarship.model.dto.CompanyDTO;
 import ar.com.scholarship.Scholarship.model.dto.ManagerDTO;
 import ar.com.scholarship.Scholarship.model.entity.Company;
 import ar.com.scholarship.Scholarship.model.entity.DocType;
@@ -13,6 +14,9 @@ import ar.com.scholarship.Scholarship.model.repository.ManagerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
 
 @Service("managerServices")
 public class ManagerServices {
@@ -54,8 +58,21 @@ public class ManagerServices {
         return managerDTOSaved;
     }
 
+    public List<ManagerDTO> findAll() {
+        List<Manager> managers = managerRepository.findAll();
+        List<ManagerDTO> managerDTOList = managerCycleMapper.toDto(managers , context);
+        return managerDTOList;
+    }
 
     public void delete(Long id) {
+        Optional<Manager> byIdOptional = managerRepository.findById(id);
+        if (byIdOptional.isPresent()) {
+            Manager managerToDelete = byIdOptional.get();
+            managerRepository.delete(managerToDelete);
+        } else {
+            logicExceptionComponent.throwExceptionEntityNotFound("Manager", id);
+        }
 
     }
 }
+
