@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @Component("managerRepository")
 public interface ManagerRepository extends JpaRepository<Manager, Long> {
-    Optional<Manager> findByDni(Integer documentation);
+    Optional<Manager> findByDocumentation(Integer documentation);
 }

@@ -4,7 +4,6 @@ import ar.com.scholarship.Scholarship.components.BusinessLogicExceptionComponent
 import ar.com.scholarship.Scholarship.model.dto.CompanyDTO;
 import ar.com.scholarship.Scholarship.model.entity.Company;
 import ar.com.scholarship.Scholarship.model.entity.CompanyStatus;
-import ar.com.scholarship.Scholarship.model.entity.Manager;
 import ar.com.scholarship.Scholarship.model.mapper.CompanyCycleMapper;
 import ar.com.scholarship.Scholarship.model.mapper.CycleAvoidingMappingContext;
 import ar.com.scholarship.Scholarship.model.repository.CompanyRepository;

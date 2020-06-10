@@ -77,8 +77,8 @@ public class ManagerServices {
 
     }
 
-    public ManagerDTO findManagerByDni(Integer documentation){
-        Optional<Manager> byDNI = managerRepository.findByDni(documentation);
+    public ManagerDTO findManagerByDocumentation(Integer documentation){
+        Optional<Manager> byDNI = managerRepository.findByDocumentation(documentation);
         ManagerDTO managerDTO = null;
         Long id = null;
 

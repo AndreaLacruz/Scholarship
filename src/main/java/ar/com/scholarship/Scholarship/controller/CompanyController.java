@@ -71,7 +71,7 @@ public class CompanyController {
 
     @GetMapping({"/{id}", "/{id}/"})
     public ResponseEntity findManagerByDni(@PathVariable Integer documentation){
-        ManagerDTO managerDTO = managerServices.findManagerByDni(documentation);
+        ManagerDTO managerDTO = managerServices.findManagerByDocumentation(documentation);
         return ResponseEntity.ok(managerDTO);
     }
 }
