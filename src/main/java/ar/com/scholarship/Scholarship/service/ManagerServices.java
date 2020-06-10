@@ -1,7 +1,6 @@
 package ar.com.scholarship.Scholarship.service;
 
 import ar.com.scholarship.Scholarship.components.BusinessLogicExceptionComponent;
-import ar.com.scholarship.Scholarship.model.dto.CompanyDTO;
 import ar.com.scholarship.Scholarship.model.dto.ManagerDTO;
 import ar.com.scholarship.Scholarship.model.entity.Company;
 import ar.com.scholarship.Scholarship.model.entity.DocType;
@@ -15,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 import java.util.Optional;
 
@@ -75,6 +75,19 @@ public class ManagerServices {
             logicExceptionComponent.throwExceptionEntityNotFound("Manager", id);
         }
 
+    }
+
+    public ManagerDTO findManagerByDni(Integer documentation){
+        Optional<Manager> byDNI = managerRepository.findByDni(documentation);
+        ManagerDTO managerDTO = null;
+        Long id = null;
+
+        if (byDNI.isPresent()){
+            Manager managerByDni = byDNI.get();
+            managerDTO = managerCycleMapper.toDto(managerByDni, context);
+        } else {
+            logicExceptionComponent.throwExceptionEntityNotFound("Manager", id);
+        } return managerDTO;
     }
 }
 

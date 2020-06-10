@@ -12,11 +12,11 @@ import ar.com.scholarship.Scholarship.model.repository.CompanyStatusRepository;
 import ar.com.scholarship.Scholarship.model.repository.ManagerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
+@Service("companyServices")
 public class CompanyServices {
 
     @Autowired
@@ -54,16 +54,11 @@ public class CompanyServices {
 
 
     public CompanyDTO save(CompanyDTO dto,Long companyStatusId, Long managerId)  {
-        Manager manager = managerRepository
-                .findById(managerId)
-                .orElseThrow(() -> logicExceptionComponent.throwExceptionEntityNotFound("Manager", managerId));
-
         CompanyStatus status = companyStatusRepository
                 .findById(companyStatusId)
                 .orElseThrow(()-> logicExceptionComponent.throwExceptionEntityNotFound("CompanyStatus", companyStatusId));
 
         Company companyToSave = companyCycleMapper.toEntity(dto, context);
-        companyToSave.setManager((Set<Manager>) manager);
         companyToSave.setStatus(status);
         Company companySaved = companyRepository.save(companyToSave);
         CompanyDTO companyDTOSaved = companyCycleMapper.toDto(companySaved, context);
@@ -77,4 +72,15 @@ public class CompanyServices {
        return companyDTOList;
     }
 
+    public CompanyDTO findById(Long id){
+        Optional<Company> byId = companyRepository.findById(id);
+        CompanyDTO companyDTO = null;
+
+        if (byId.isPresent()){
+            Company companyById = byId.get();
+            companyDTO = companyCycleMapper.toDto(companyById, context);
+        } else {
+            logicExceptionComponent.throwExceptionEntityNotFound("Company", id);
+        } return companyDTO;
+    }
 }

@@ -11,10 +11,12 @@ import ar.com.scholarship.Scholarship.model.repository.CourseRepository;
 import ar.com.scholarship.Scholarship.model.repository.ModalityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
+@Service("courseServices")
 public class CourseServices {
 
     @Autowired
