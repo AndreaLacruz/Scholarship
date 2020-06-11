@@ -40,7 +40,7 @@ public class CourseDTO implements Serializable {
     private BigInteger price;
 
     @NotNull(message = "total_hours is required")
-    private Time totalHours;
+    private Integer totalHours;
 
     @NotNull(message = "places is required")
     private Integer places;
@@ -57,11 +57,17 @@ public class CourseDTO implements Serializable {
     @NotNull(message = "course_category_id is required")
     private Long courseCategoryId;
 
-    @JsonIgnoreProperties({"course"})
+    // TODO hacer dto
     private Set<StudentHasCourse> studentHasCourses;
-    private Modality modality;
-    private CourseCategory category;
-    private Company company;
+
+    @JsonIgnoreProperties({"courses"})
+    private ModalityDTO modality;
+
+    @JsonIgnoreProperties({"courses"})
+    private CourseCategoryDTO category;
+
+    @JsonIgnoreProperties({"courses"})
+    private CompanyDTO company;
 }
 
 /*

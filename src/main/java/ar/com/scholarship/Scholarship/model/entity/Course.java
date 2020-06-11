@@ -30,7 +30,7 @@ public class Course {
     private BigInteger price;
 
     @Column(nullable = false, length = 3)
-    private Time totalHours;
+    private Integer totalHours;
 
     @Column(nullable = false, length = 20)
     private Integer places;

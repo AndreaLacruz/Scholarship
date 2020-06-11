@@ -24,7 +24,7 @@ public class Company {
     private String name;
 
     @Column(nullable = false, length = 15)
-    private Integer cuil;
+    private Long cuil;
 
     @Column(nullable = false, length = 50)
     private String type;

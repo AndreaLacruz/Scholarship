@@ -31,7 +31,7 @@ public class CompanyDTO implements Serializable {
     private String name;
 
     @NotNull(message = "cuil is required")
-    private Integer cuil;
+    private Long cuil;
 
     @NotBlank(message = "type is required")
     private String type;
