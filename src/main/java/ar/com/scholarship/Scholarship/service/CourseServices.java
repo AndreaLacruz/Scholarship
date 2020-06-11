@@ -51,7 +51,6 @@ public class CourseServices {
         return courseDTOList;
     }
 
-
     public CourseDTO save(CourseDTO dto) {
         Long modalityId = dto.getModalityId();
         Modality modality = modalityRepository
@@ -77,7 +76,6 @@ public class CourseServices {
         return courseDTOSaved;
     }
 
-
     public void delete(Long id) {
         Optional<Course> byIdOptional = courseRepository.findById(id);
         if (byIdOptional.isPresent()){
@@ -100,5 +98,20 @@ public class CourseServices {
             logicExceptionComponent.throwExceptionEntityNotFound("Course", id);
         }
         return  courseDTO;
+    }
+
+    public CourseDTO update(CourseDTO courseDTO, Long id){
+        Optional<Course> byIdOptional = courseRepository.findById(id);
+        CourseDTO course = null;
+
+        if (byIdOptional.isPresent()){
+            Course courseById = byIdOptional.get();
+            course.setId(courseById.getId());
+            Course courseToUpdate = courseCycleMapper.toEntity(courseDTO, context);
+            Course courseUpdated = courseRepository.save(courseToUpdate);
+            course = courseCycleMapper.toDto(courseUpdated,context);
+        } else {
+            logicExceptionComponent.throwExceptionEntityNotFound("Course", id);
+        } return course;
     }
 }

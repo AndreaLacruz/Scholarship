@@ -43,7 +43,7 @@ public class CompanyServices {
 
     public void delete(Long id) {
         Optional<Company> byIdOptional = companyRepository.findById(id);
-        if (byIdOptional.isPresent()){
+        if (byIdOptional.isPresent()) {
             Company companyToDelete = byIdOptional.get();
             companyRepository.delete(companyToDelete);
         } else {
@@ -52,11 +52,11 @@ public class CompanyServices {
     }
 
 
-    public CompanyDTO save(CompanyDTO dto)  {
+    public CompanyDTO save(CompanyDTO dto) {
         Long companyStatusId = dto.getCompanyStatusId();
         CompanyStatus status = companyStatusRepository
                 .findById(companyStatusId)
-                .orElseThrow(()-> logicExceptionComponent.throwExceptionEntityNotFound("CompanyStatus", companyStatusId));
+                .orElseThrow(() -> logicExceptionComponent.throwExceptionEntityNotFound("CompanyStatus", companyStatusId));
 
         Company companyToSave = companyCycleMapper.toEntity(dto, context);
         companyToSave.setStatus(status);
@@ -67,20 +67,36 @@ public class CompanyServices {
 
 
     public List<CompanyDTO> findAll() {
-       List<Company> companyList = companyRepository.findAll();
-       List<CompanyDTO> companyDTOList = companyCycleMapper.toDto(companyList, context);
-       return companyDTOList;
+        List<Company> companyList = companyRepository.findAll();
+        List<CompanyDTO> companyDTOList = companyCycleMapper.toDto(companyList, context);
+        return companyDTOList;
     }
 
-    public CompanyDTO findById(Long id){
+    public CompanyDTO findById(Long id) {
         Optional<Company> byId = companyRepository.findById(id);
         CompanyDTO companyDTO = null;
 
-        if (byId.isPresent()){
+        if (byId.isPresent()) {
             Company companyById = byId.get();
             companyDTO = companyCycleMapper.toDto(companyById, context);
         } else {
             logicExceptionComponent.throwExceptionEntityNotFound("Company", id);
-        } return companyDTO;
+        }
+        return companyDTO;
+    }
+
+    public CompanyDTO update(CompanyDTO companyDTO, Long id){
+        Optional<Company> byIdOptional = companyRepository.findById(id);
+        CompanyDTO company = null;
+
+        if (byIdOptional.isPresent()){
+            Company companyById = byIdOptional.get();
+            company.setId(companyById.getId());
+            Company companyToUpdate = companyCycleMapper.toEntity(companyDTO, context);
+            Company companyUpdated = companyRepository.save(companyToUpdate);
+            company = companyCycleMapper.toDto(companyUpdated, context);
+        } else {
+            logicExceptionComponent.throwExceptionEntityNotFound("Company " , id);
+        } return company;
     }
 }

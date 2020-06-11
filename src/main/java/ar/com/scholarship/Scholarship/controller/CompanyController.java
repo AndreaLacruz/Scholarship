@@ -53,6 +53,17 @@ public class CompanyController {
         return ResponseEntity.ok(companyById);
     }
 
+    @DeleteMapping({"/companies/{id}", "/companies/{id}/"}) // http://localhost:8080/companies/1
+    public ResponseEntity deleteCompany(Long id){
+        companyServices.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping({"/companies/{id}", "/companies/{id}/"}) // http://localhost:8080/companies/1
+    public ResponseEntity updateCompany(@Valid @RequestBody CompanyDTO companyDTO, Long id){
+        CompanyDTO companyUpdated = companyServices.update(companyDTO, id);
+        return ResponseEntity.ok(companyUpdated);
+    }
 
     //MANAGER
 
@@ -75,6 +86,18 @@ public class CompanyController {
         return ResponseEntity.ok(managerDTO);
     }
 
+    @DeleteMapping({"/managers/{id}", "/managers/{id}/"}) // http://localhost:8080/managers/1
+    public ResponseEntity deleteManager(Long id){
+        managerServices.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping({"/managers/{id}", "/managers/{id}/"}) // http://localhost:8080/managers/1
+    public ResponseEntity updateManager(@Valid @RequestBody ManagerDTO managerDTO, Long id){
+        ManagerDTO managerUpdated = managerServices.update(managerDTO, id);
+        return ResponseEntity.ok(managerUpdated);
+    }
+
     //COURSES
 
     @PostMapping({"/courses", "/courses/"}) // http://localhost:8080/courses
@@ -95,6 +118,18 @@ public class CompanyController {
     public ResponseEntity findCourseByName(@PathVariable String name){
         CourseDTO courseDTO = courseServices.findByName(name);
         return ResponseEntity.ok(courseDTO);
+    }
+
+    @DeleteMapping({"/courses/{id}", "/courses/{id}/"}) // http://localhost:8080/courses/1
+    public ResponseEntity deleteCourses(Long id){
+        courseServices.delete(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    @PutMapping({"/courses/{id}", "/courses/{id}/"}) // http://localhost:8080/courses/1
+    public ResponseEntity updateCourse(@Valid @RequestBody CourseDTO courseDTO, Long id){
+        CourseDTO courseUpdated = courseServices.update(courseDTO, id);
+        return ResponseEntity.ok(courseUpdated);
     }
 }
 

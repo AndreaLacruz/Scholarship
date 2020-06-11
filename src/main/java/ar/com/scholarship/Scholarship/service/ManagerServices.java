@@ -88,5 +88,20 @@ public class ManagerServices {
             logicExceptionComponent.throwExceptionEntityNotFound("Manager", id);
         } return managerDTO;
     }
+
+    public ManagerDTO update(ManagerDTO managerDTO, Long id){
+        Optional<Manager> byIdOptional = managerRepository.findById(id);
+        ManagerDTO manager = null;
+
+        if (byIdOptional.isPresent()){
+            Manager managerById = byIdOptional.get();
+            manager.setId(managerById.getId());
+            Manager managerToUpdate = managerCycleMapper.toEntity(managerDTO, context);
+            Manager managerUpdated = managerRepository.save(managerToUpdate);
+            manager = managerCycleMapper.toDto(managerUpdated, context);
+        } else {
+            logicExceptionComponent.throwExceptionEntityNotFound("Manager ", id);
+        } return manager;
+    }
 }
 
