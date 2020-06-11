@@ -13,6 +13,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.sql.Time;
@@ -23,7 +24,7 @@ import java.util.Set;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({"id", "name","description", "category", "modality", "totalHours",  "price", "company", "places", "scholarshipPlaces",
+@JsonPropertyOrder({"id", "name","description", "category", "modality", "total_hours",  "price", "company", "places", "scholarship_places",
 "studentHasCourse"})
 public class CourseDTO implements Serializable {
 
@@ -35,16 +36,16 @@ public class CourseDTO implements Serializable {
     @NotBlank(message = "description is required")
     private String description;
 
-    @NotBlank(message = "price is required")
+    @NotNull(message = "price is required")
     private BigInteger price;
 
-    @NotBlank(message = "total hours is required")
+    @NotNull(message = "total_hours is required")
     private Time totalHours;
 
-    @NotBlank(message = "places is required")
+    @NotNull(message = "places is required")
     private Integer places;
 
-    @NotBlank(message = "scholarship places is required")
+    @NotNull(message = "scholarship_places is required")
     private Integer scholarshipPlaces;
 
     private Set<StudentHasCourse> studentHasCourses;

@@ -24,6 +24,4 @@ public class ApplicationTypeDTO implements Serializable {
     @NotBlank(message = "type is required")
     private String type;
 
-
-
 }

@@ -16,7 +16,6 @@ import java.net.URISyntaxException;
 import java.util.List;
 
 @RestController
-@RequestMapping({"/companies"})
 public class CompanyController {
 
     @Autowired
@@ -34,20 +33,20 @@ public class CompanyController {
     //COMPANY
 
     @PostMapping({"/companies", "/companies/"}) // http://localhost:8080/companies/companies
-    public ResponseEntity addNewCompany(@Valid @RequestBody CompanyDTO companyDTO, @PathVariable Long statusId,
-                                        @PathVariable Long managerId){
-        CompanyDTO companyDTOSaved = companyServices.save(companyDTO, managerId, statusId);
+    public ResponseEntity addNewCompany(@Valid @RequestBody CompanyDTO companyDTO) throws URISyntaxException {
+        CompanyDTO companyDTOSaved = companyServices.save(companyDTO);
         return ResponseEntity
-                .ok(companyDTOSaved);
+                .created(new URI(("/companies/" + companyDTOSaved.getId())))
+                .body(companyDTOSaved);
     }
 
-    @GetMapping({"","/"})  // http://localhost:8080/companies
+    @GetMapping({"/companies","/companies/"})  // http://localhost:8080/companies
     public ResponseEntity getAllCompanies(){
         List<CompanyDTO> all = companyServices.findAll();
         return ResponseEntity.ok(all);
     }
 
-    @GetMapping({"/{id}", "/{id}/"}) // http://localhost:8080/companies/1
+    @GetMapping({"/companies/{id}", "/companies/{id}/"}) // http://localhost:8080/companies/1
     public ResponseEntity getCompanyById(@PathVariable Long id){
         CompanyDTO companyById = companyServices.findById(id);
         return ResponseEntity.ok(companyById);
@@ -63,13 +62,13 @@ public class CompanyController {
                 .body(managerDTOSaved);
     }
 
-    @GetMapping({"", "/"})
+    @GetMapping({"managers", "/managers/"}) // http://localhost:8080/managers
     public ResponseEntity getAllManagers(){
         List<ManagerDTO> all = managerServices.findAll();
         return ResponseEntity.ok(all);
     }
 
-    @GetMapping({"/{id}", "/{id}/"})
+    @GetMapping({"/managers/{id}", "/managers/{id}/"}) // http://localhost:8080/managers/1
     public ResponseEntity findManagerByDni(@PathVariable Integer documentation){
         ManagerDTO managerDTO = managerServices.findManagerByDocumentation(documentation);
         return ResponseEntity.ok(managerDTO);

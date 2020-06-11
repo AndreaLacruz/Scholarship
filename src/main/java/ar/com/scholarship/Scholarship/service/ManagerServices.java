@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.util.List;
 import java.util.Optional;
 
@@ -41,12 +40,12 @@ public class ManagerServices {
 
 
     public ManagerDTO save(ManagerDTO dto) {
-        Long companyId = dto.getCompany().getId();
+        Long companyId = dto.getCompanyId();
         Company company = companyRepository
                 .findById(companyId)
                 .orElseThrow(() -> logicExceptionComponent.throwExceptionEntityNotFound("Company", companyId));
 
-        Long docTypeId = dto.getDocType().getId();
+        Long docTypeId = dto.getDocTypeId();
         DocType docType = docTypeRepository
                 .findById(docTypeId)
                 .orElseThrow(() -> logicExceptionComponent.throwExceptionEntityNotFound("DocType", docTypeId));

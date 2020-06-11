@@ -52,7 +52,8 @@ public class CompanyServices {
     }
 
 
-    public CompanyDTO save(CompanyDTO dto,Long companyStatusId, Long managerId)  {
+    public CompanyDTO save(CompanyDTO dto)  {
+        Long companyStatusId = dto.getCompanyStatusId();
         CompanyStatus status = companyStatusRepository
                 .findById(companyStatusId)
                 .orElseThrow(()-> logicExceptionComponent.throwExceptionEntityNotFound("CompanyStatus", companyStatusId));
