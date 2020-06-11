@@ -4,6 +4,7 @@ import ar.com.scholarship.Scholarship.model.entity.Company;
 import ar.com.scholarship.Scholarship.model.entity.CourseCategory;
 import ar.com.scholarship.Scholarship.model.entity.Modality;
 import ar.com.scholarship.Scholarship.model.entity.StudentHasCourse;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
@@ -24,8 +25,7 @@ import java.util.Set;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({"id", "name","description", "category", "modality", "total_hours",  "price", "company", "places", "scholarship_places",
-"studentHasCourse"})
+@JsonPropertyOrder({"id", "name","description", "category", "modality", "total_hours",  "price", "company", "places", "scholarship_places"})
 public class CourseDTO implements Serializable {
 
     private Long id;
@@ -48,8 +48,32 @@ public class CourseDTO implements Serializable {
     @NotNull(message = "scholarship_places is required")
     private Integer scholarshipPlaces;
 
+    @NotNull(message = "company_id is required")
+    private Long companyId;
+
+    @NotNull(message = "modality_id is required")
+    private Long modalityId;
+
+    @NotNull(message = "course_category_id is required")
+    private Long courseCategoryId;
+
+    @JsonIgnoreProperties({"course"})
     private Set<StudentHasCourse> studentHasCourses;
     private Modality modality;
     private CourseCategory category;
     private Company company;
 }
+
+/*
+{
+    "name": "Diseño grafico",
+    "description": "aprender a usar herramientas del diseño grafico",
+    "total_hours": 700,
+    "price": 200,
+    "places": 10,
+    "scholarship_places": 4,
+    "course_category_id": 6,
+    "modality_id" : 2,
+    "company_id": 1
+}
+*/

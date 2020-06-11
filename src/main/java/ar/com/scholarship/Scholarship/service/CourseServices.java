@@ -52,16 +52,18 @@ public class CourseServices {
     }
 
 
-    public CourseDTO save(CourseDTO dto, Long modalityId, Long companyId, Long courseCategoryId
-                          ) {
+    public CourseDTO save(CourseDTO dto) {
+        Long modalityId = dto.getModalityId();
         Modality modality = modalityRepository
                 .findById(modalityId)
                 .orElseThrow(()-> logicExceptionComponent.throwExceptionEntityNotFound("Modality", modalityId));
 
+        Long companyId = dto.getCompanyId();
         Company company = companyRepository
                 .findById(companyId)
                 .orElseThrow(()-> logicExceptionComponent.throwExceptionEntityNotFound("Company", companyId));
 
+        Long courseCategoryId = dto.getCourseCategoryId();
         CourseCategory courseCategory = courseCategoryRepository
                 .findById(courseCategoryId)
                 .orElseThrow(()-> logicExceptionComponent.throwExceptionEntityNotFound("CourseCategory", courseCategoryId));
@@ -84,5 +86,19 @@ public class CourseServices {
         } else {
             logicExceptionComponent.throwExceptionEntityNotFound("Course", id);
         }
+    }
+
+    public CourseDTO findByName(String name){
+        Optional<Course> byName = courseRepository.findByName(name);
+        CourseDTO courseDTO = null;
+        Long id = null;
+
+        if (byName.isPresent()){
+            Course courseByName = byName.get();
+            courseDTO = courseCycleMapper.toDto(courseByName, context);
+        } else {
+            logicExceptionComponent.throwExceptionEntityNotFound("Course", id);
+        }
+        return  courseDTO;
     }
 }
