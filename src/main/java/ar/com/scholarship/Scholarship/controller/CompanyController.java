@@ -1,6 +1,7 @@
 package ar.com.scholarship.Scholarship.controller;
 
 import ar.com.scholarship.Scholarship.model.dto.CompanyDTO;
+import ar.com.scholarship.Scholarship.model.dto.CourseDTO;
 import ar.com.scholarship.Scholarship.model.dto.ManagerDTO;
 import ar.com.scholarship.Scholarship.service.CompanyServices;
 import ar.com.scholarship.Scholarship.service.CourseServices;
@@ -32,7 +33,7 @@ public class CompanyController {
 
     //COMPANY
 
-    @PostMapping({"/companies", "/companies/"}) // http://localhost:8080/companies/companies
+    @PostMapping({"/companies", "/companies/"}) // http://localhost:8080/companies
     public ResponseEntity addNewCompany(@Valid @RequestBody CompanyDTO companyDTO) throws URISyntaxException {
         CompanyDTO companyDTOSaved = companyServices.save(companyDTO);
         return ResponseEntity
@@ -68,10 +69,32 @@ public class CompanyController {
         return ResponseEntity.ok(all);
     }
 
-    @GetMapping({"/managers/{id}", "/managers/{id}/"}) // http://localhost:8080/managers/1
+    @GetMapping({"/managers/{documentation}", "/managers/{documentation}/"}) // http://localhost:8080/managers/1
     public ResponseEntity findManagerByDni(@PathVariable Integer documentation){
         ManagerDTO managerDTO = managerServices.findManagerByDocumentation(documentation);
         return ResponseEntity.ok(managerDTO);
+    }
+
+    //COURSES
+
+    @PostMapping({"/courses", "/courses/"}) // http://localhost:8080/courses
+    public ResponseEntity addNewCourse(@Valid @RequestBody CourseDTO courseDTO) throws URISyntaxException{
+        CourseDTO courseDTOSaved = courseServices.save(courseDTO);
+        return ResponseEntity
+                .created(new URI("/courses/" + courseDTOSaved.getId()))
+                .body(courseDTOSaved);
+    }
+
+    @GetMapping({"/courses", "/courses/"}) // http://localhost:8080/courses
+    public ResponseEntity getAllCourses(){
+        List<CourseDTO> all = courseServices.findAll();
+        return ResponseEntity.ok(all);
+    }
+
+    @GetMapping({"/courses/{name}", "/courses/{name}/"}) // http://localhost:8080/managers/name
+    public ResponseEntity findCourseByName(@PathVariable String name){
+        CourseDTO courseDTO = courseServices.findByName(name);
+        return ResponseEntity.ok(courseDTO);
     }
 }
 
