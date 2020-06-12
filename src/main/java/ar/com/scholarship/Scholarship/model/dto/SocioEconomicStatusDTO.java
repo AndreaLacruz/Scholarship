@@ -9,7 +9,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
@@ -18,24 +17,24 @@ import java.io.Serializable;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({"id", "studies", "work", "income", "monthly_income", "kids", "how_many", "student"})
+@JsonPropertyOrder({"id", "are_Studying", "are_Working", "has_Income", "monthly_income", "has_Kids", "how_many", "student"})
 public class SocioEconomicStatusDTO implements Serializable {
 
     private Long id;
 
-    @NotBlank(message = "item filled is required")
+    @NotNull(message = "item filled is required")
     private Boolean areStudying;
 
-    @NotBlank(message = "item filled is required")
+    @NotNull(message = "item filled is required")
     private Boolean areWorking;
 
-    @NotBlank(message = "item filled is required")
+    @NotNull(message = "item filled is required")
     private Boolean hasIncome;
 
     @NotNull(message = "item filled is required")
     private Double monthlyIncome;
 
-    @NotBlank(message = "item filled is required")
+    @NotNull(message = "item filled is required")
     private Boolean hasKids;
 
     @NotNull(message = "item filled is required")
@@ -51,11 +50,11 @@ public class SocioEconomicStatusDTO implements Serializable {
 
 /*
 {
-    "studies": true,
-    "work": false,
-    "income": true,
+    "areStudying": true,
+    "areWorking": false,
+    "hasIncome": true,
     "monthly_income": 23000.4,
-    "kids": false,
+    "hasKids": false,
     "how_many": 0,
     "student_id": 1
 }

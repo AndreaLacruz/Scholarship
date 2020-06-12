@@ -31,6 +31,10 @@ public class StudentHasCourse {
     @Type(type = "org.hibernate.type.BooleanType")
     private Boolean courseFull;
 
+    @Column(nullable = false)
+    @Type(type = "org.hibernate.type.BooleanType")
+    private Boolean courseHasFinalized;
+
     @ManyToOne
     @JoinColumn(name = "StudentStatus_id")
     private StudentStatus status;

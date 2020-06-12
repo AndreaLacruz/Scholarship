@@ -34,10 +34,6 @@ public class CompanyServices {
     @Qualifier("companyRepository")
     private CompanyRepository companyRepository;
 
-    @Autowired
-    @Qualifier("managerRepository")
-    private ManagerRepository managerRepository;
-
     private CompanyCycleMapper companyCycleMapper = CompanyCycleMapper.MAPPER;
 
 

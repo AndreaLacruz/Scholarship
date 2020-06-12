@@ -50,7 +50,7 @@ public class StudentDTO implements Serializable {
 {
     "name": "Leonardo",
     "last_name": "Torres",
-    "birthday": 1999-02-11,
+    "birthday": "1999-02-11",
     "gender": "masculino",
     "address": "av. rivadavia 1221",
 }
