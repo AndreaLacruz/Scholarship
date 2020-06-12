@@ -48,6 +48,10 @@ public class CourseDTO implements Serializable {
     @NotNull(message = "scholarship_places is required")
     private Integer scholarshipPlaces;
 
+    private Integer scholarshipCounter;
+    private Integer openPlacesCounter;
+
+
     @NotNull(message = "company_id is required")
     private Long companyId;
 

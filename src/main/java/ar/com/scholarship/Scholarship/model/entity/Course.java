@@ -38,6 +38,12 @@ public class Course {
     @Column(nullable = false, length = 20)
     private Integer scholarshipPlaces;
 
+    @Column(nullable = false)
+    private Integer scholarshipCounter;
+
+    @Column(nullable = false)
+    private Integer openPlacesCounter;
+
     @OneToMany(mappedBy = "course")
     private Set<StudentHasCourse> studentHasCourses;
 

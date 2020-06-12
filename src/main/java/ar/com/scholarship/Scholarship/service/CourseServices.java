@@ -71,6 +71,11 @@ public class CourseServices {
         courseToSave.setCompany(company);
         courseToSave.setCategory(courseCategory);
         courseToSave.setModality(modality);
+
+        int openPlacesCounter = dto.getPlaces() - dto.getScholarshipPlaces();
+        courseToSave.setOpenPlacesCounter(openPlacesCounter);
+        courseToSave.setScholarshipCounter(dto.getScholarshipPlaces());
+
         Course courseSaved = courseRepository.save(courseToSave);
         CourseDTO courseDTOSaved = courseCycleMapper.toDto(courseSaved, context);
         return courseDTOSaved;
