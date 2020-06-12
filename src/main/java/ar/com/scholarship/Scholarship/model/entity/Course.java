@@ -30,13 +30,19 @@ public class Course {
     private BigInteger price;
 
     @Column(nullable = false, length = 3)
-    private Time totalHours;
+    private Integer totalHours;
 
     @Column(nullable = false, length = 20)
     private Integer places;
 
     @Column(nullable = false, length = 20)
     private Integer scholarshipPlaces;
+
+    @Column(nullable = false)
+    private Integer scholarshipCounter;
+
+    @Column(nullable = false)
+    private Integer openPlacesCounter;
 
     @OneToMany(mappedBy = "course")
     private Set<StudentHasCourse> studentHasCourses;

@@ -11,7 +11,7 @@ import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-@Component
+//@Component
 public class DataCleaner {
 
    /* private static final Logger LOGGER = LoggerFactory.getLogger(DataCleaner.class);

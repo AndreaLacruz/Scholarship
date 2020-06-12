@@ -1,5 +1,6 @@
 package ar.com.scholarship.Scholarship.model.dto;
 
+import ar.com.scholarship.Scholarship.model.entity.Course;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
@@ -10,6 +11,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
+import java.util.List;
 
 @Setter
 @Getter
@@ -23,4 +25,6 @@ public class CourseCategoryDTO implements Serializable {
 
     @NotBlank(message = "Category is required")
     private String category;
+
+    private List<CourseDTO> courses;
 }
