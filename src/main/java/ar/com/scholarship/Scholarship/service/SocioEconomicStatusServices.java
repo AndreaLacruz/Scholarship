@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service("socioEconomicStatusServices")
-public class SocioEconomicStatusServices implements Services<SocioEconomicStatusDTO>{
+public class SocioEconomicStatusServices {
 
     private SocioEconomicStatusCycleMapper statusCycleMapper = SocioEconomicStatusCycleMapper.MAPPER;
 
@@ -36,7 +36,7 @@ public class SocioEconomicStatusServices implements Services<SocioEconomicStatus
     private StudentRepository studentRepository;
 
 
-    @Override
+
     public SocioEconomicStatusDTO save(SocioEconomicStatusDTO dto) throws Exception {
         Long studentId = dto.getStudentId();
         Student student = studentRepository
@@ -50,14 +50,14 @@ public class SocioEconomicStatusServices implements Services<SocioEconomicStatus
         return socioEconomicStatusDTOSaved;
     }
 
-    @Override
+
     public List<SocioEconomicStatusDTO> findAll() {
         List<SocioEconomicStatus> socioEconomicStatusList = socioEconomicStatusRepository.findAll();
         List<SocioEconomicStatusDTO> socioEconomicStatusDTOList = statusCycleMapper.toDto(socioEconomicStatusList, context);
         return socioEconomicStatusDTOList;
     }
 
-    @Override
+
     public void delete(Long id) {
         Optional<SocioEconomicStatus> byIdOptional = socioEconomicStatusRepository.findById(id);
         if (byIdOptional.isPresent()){

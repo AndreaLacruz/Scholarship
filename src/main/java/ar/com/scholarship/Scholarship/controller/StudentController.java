@@ -4,6 +4,7 @@ import ar.com.scholarship.Scholarship.model.dto.SocioEconomicStatusDTO;
 import ar.com.scholarship.Scholarship.model.dto.StudentDTO;
 import ar.com.scholarship.Scholarship.service.SocioEconomicStatusServices;
 import ar.com.scholarship.Scholarship.service.StudentServices;
+import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
@@ -54,8 +55,9 @@ public class StudentController {
 
     // SOCIO ECONOMIC STATUS
 
+    @SneakyThrows
     @PostMapping({"/socioEconomicStatus", "/socioEconomicStatus/"}) // http://localhost:8080/socioEconomicStatus
-    public ResponseEntity addNewSocioEconomicStatus(@Valid @RequestBody SocioEconomicStatusDTO socioEconomicStatusDTO) throws Exception {
+    public ResponseEntity addNewSocioEconomicStatus(@Valid @RequestBody SocioEconomicStatusDTO socioEconomicStatusDTO) throws URISyntaxException {
         SocioEconomicStatusDTO socioEconomicStatusDTOSaved = socioEconomicStatusServices.save(socioEconomicStatusDTO);
         return ResponseEntity
                 .created(new URI("/socioEconomicStatus" + socioEconomicStatusDTOSaved.getId()))
