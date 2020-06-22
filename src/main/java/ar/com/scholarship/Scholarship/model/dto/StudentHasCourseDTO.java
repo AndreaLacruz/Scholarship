@@ -1,5 +1,6 @@
 package ar.com.scholarship.Scholarship.model.dto;
 
+import ar.com.scholarship.Scholarship.model.entity.*;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
@@ -15,7 +16,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({"id", "student","status", "course", "application_type", "course_full", "course_has_finalized"})
+@JsonPropertyOrder({"id", "student","student_status_id", "course", "application_type_id", "course_has_finalized"})
 public class StudentHasCourseDTO {
 
 
@@ -25,6 +26,20 @@ public class StudentHasCourseDTO {
     @NotNull(message = "item filled is required")
     private Boolean courseHasFinalized;
 
-    private StudentStatusDTO status;
+    private Long studentStatusId;
+    private Long applicationTypeId;
+
+    private StudentStatusDTO studentStatus;
     private ApplicationTypeDTO applicationType;
+
 }
+
+/*
+{
+    "student_id": 9,
+    "course_id": 5,
+    "course_Has_Finalized": false,
+    "student_Status_id": 1,
+    "application_Type_id": 3,
+}
+*/

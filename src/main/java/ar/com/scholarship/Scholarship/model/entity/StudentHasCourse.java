@@ -1,11 +1,13 @@
 package ar.com.scholarship.Scholarship.model.entity;
 
+import ar.com.scholarship.Scholarship.model.dto.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.List;
 
 
@@ -14,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table(name = "StudentHasCourse")
-public class StudentHasCourse {
+public class StudentHasCourse implements Serializable {
 
     @EmbeddedId
     private StudentHasCourseId id;
@@ -33,7 +35,7 @@ public class StudentHasCourse {
 
     @ManyToOne
     @JoinColumn(name = "StudentStatus_id")
-    private StudentStatus status;
+    private StudentStatus studentStatus;
 
     @ManyToOne
     @JoinColumn(name = "ApplicationType_id")
@@ -44,13 +46,24 @@ public class StudentHasCourse {
         return this;
     }
 
+    public StudentHasCourse setStudent(Student student){
+        this.student = student;
+        return this;
+    }
+
+    public StudentHasCourse setApplicationType(ApplicationType applicationTypeId) {
+        this.applicationType = applicationTypeId;
+        return this;
+    }
+
     public StudentHasCourse setCourse(Course course){
         this.course = course;
         return this;
     }
 
-    public StudentHasCourse setStudent(Student student){
-        this.student = student;
+
+    public StudentHasCourse setStudentStatus(StudentStatus studentStatus){
+        this.studentStatus = studentStatus;
         return this;
     }
 

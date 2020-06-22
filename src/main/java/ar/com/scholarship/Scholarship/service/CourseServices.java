@@ -13,8 +13,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service("courseServices")
 public class CourseServices {
@@ -118,5 +120,42 @@ public class CourseServices {
         } else {
             logicExceptionComponent.throwExceptionEntityNotFound("Course", id);
         } return course;
+    }
+
+    public List<CourseDTO> findByAvailablePlaces(){
+       List<Course> all = courseRepository.findAll();
+       List<Course> courseListAvailable = all.stream()
+               .filter(course -> course.getPlaces() > 0)
+               .collect(Collectors.toList());
+       List<CourseDTO> courseDTOListAvailable = courseCycleMapper.toDto(courseListAvailable, context);
+       return courseDTOListAvailable;
+    }
+
+    public List<CourseDTO> findByCompany(String companyName){
+        List<Course> all = courseRepository.findAll();
+        List<Course> courseListByCompany = courseRepository.findByCompany(companyName);
+        List<CourseDTO> courseDTOList = courseCycleMapper.toDto(courseListByCompany,context);
+        return courseDTOList;
+    }
+
+    public List<CourseDTO> findByCategory(){
+        List<Course> all = courseRepository.findAll();
+        List<Course> courseListCategory = all.stream()
+                .filter(course -> course.getCategory().equals(course))
+                .collect(Collectors.toList());
+        List<CourseDTO> courseDTOList = courseCycleMapper.toDto(courseListCategory,context);
+        return courseDTOList;
+    }
+
+    public List<CourseDTO> findByCompanyAndCategory(){
+        List<Course> all = courseRepository.findAll();
+        List<Course> courseList = new ArrayList<>();
+        for (Course course: all){
+            if (course.getCompany().equals(course) && course.getCategory().equals(course))
+                courseList.add(course);
+        }
+
+        List<CourseDTO> courseDTOList = courseCycleMapper.toDto(courseList,context);
+        return courseDTOList;
     }
 }

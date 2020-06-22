@@ -44,6 +44,7 @@ public class StudentDTO implements Serializable {
 
     private SocioEconomicStatusDTO socioEconomicStatus;
 
+
 }
 
 /*

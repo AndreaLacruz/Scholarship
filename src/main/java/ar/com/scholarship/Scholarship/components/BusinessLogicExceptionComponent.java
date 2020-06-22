@@ -3,6 +3,7 @@ package ar.com.scholarship.Scholarship.components;
 
 import ar.com.scholarship.Scholarship.exception.ApiEntityError;
 import ar.com.scholarship.Scholarship.exception.BusinessLogicException;
+import ar.com.scholarship.Scholarship.model.entity.StudentHasCourseId;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +22,24 @@ public class BusinessLogicExceptionComponent {
                 HttpStatus.NOT_FOUND,
                 apiEntityError
         );
+    }
+
+    public RuntimeException throwExceptionCourseSoldOut(String courseName){
+        ApiEntityError apiEntityError = new ApiEntityError(
+                courseName, "Not Available", "No places available in this course" + courseName
+        );
+        return new BusinessLogicException("No places available in this course", HttpStatus.BAD_REQUEST, apiEntityError);
+    }
+
+    public RuntimeException throwExceptionApplicationAlreadyExist(StudentHasCourseId id){
+        ApiEntityError apiEntityError = new ApiEntityError(
+                "StudentHasCourse",
+                "Application Already Exist",
+                "The application to this course already exist " + id.getCourseId() + " on this student " + id.getStudentId()
+        ); return new BusinessLogicException(
+                "This application already exist", HttpStatus.BAD_REQUEST, apiEntityError
+        );
+
     }
 }
 
