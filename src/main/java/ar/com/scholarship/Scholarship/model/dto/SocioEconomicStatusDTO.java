@@ -50,11 +50,11 @@ public class SocioEconomicStatusDTO implements Serializable {
 
 /*
 {
-    "areStudying": true,
-    "areWorking": false,
-    "hasIncome": true,
+    "are_studying": true,
+    "are_working": false,
+    "has_income": true,
     "monthly_income": 23000.4,
-    "hasKids": false,
+    "has_kids": false,
     "how_many": 0,
     "student_id": 1
 }
