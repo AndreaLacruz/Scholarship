@@ -19,22 +19,22 @@ public class SocioEconomicStatus {
 
     @Column(nullable = false)
     @Type(type = "org.hibernate.type.BooleanType")
-    private Boolean studies;
+    private Boolean areStudying;
 
     @Column(nullable = false)
     @Type(type = "org.hibernate.type.BooleanType")
-    private Boolean work;
+    private Boolean areWorking;
 
     @Column(nullable = false)
     @Type(type = "org.hibernate.type.BooleanType")
-    private Boolean income;
+    private Boolean hasIncome;
 
     @Column(nullable = false, length = 10)
     private Double monthlyIncome;
 
     @Column(nullable = false)
     @Type(type = "org.hibernate.type.BooleanType")
-    private Boolean kids;
+    private Boolean hasKids;
 
     @Column(nullable = false, length = 10)
     private Integer howMany;

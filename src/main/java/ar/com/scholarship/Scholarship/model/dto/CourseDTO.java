@@ -1,8 +1,5 @@
 package ar.com.scholarship.Scholarship.model.dto;
 
-import ar.com.scholarship.Scholarship.model.entity.Company;
-import ar.com.scholarship.Scholarship.model.entity.CourseCategory;
-import ar.com.scholarship.Scholarship.model.entity.Modality;
 import ar.com.scholarship.Scholarship.model.entity.StudentHasCourse;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -17,7 +14,6 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigInteger;
-import java.sql.Time;
 import java.util.Set;
 
 @Setter
@@ -61,7 +57,7 @@ public class CourseDTO implements Serializable {
     @NotNull(message = "course_category_id is required")
     private Long courseCategoryId;
 
-    // TODO hacer dto
+
     private Set<StudentHasCourse> studentHasCourses;
 
     @JsonIgnoreProperties({"courses"})
