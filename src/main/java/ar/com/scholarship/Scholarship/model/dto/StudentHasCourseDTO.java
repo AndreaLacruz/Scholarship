@@ -23,9 +23,6 @@ public class StudentHasCourseDTO {
     private CourseDTO course;
 
     @NotNull(message = "item filled is required")
-    private Boolean courseFull;
-
-    @NotNull(message = "item filled is required")
     private Boolean courseHasFinalized;
 
     private StudentStatusDTO status;

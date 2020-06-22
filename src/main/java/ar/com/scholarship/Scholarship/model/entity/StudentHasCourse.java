@@ -20,16 +20,12 @@ public class StudentHasCourse {
     private StudentHasCourseId id;
 
     @ManyToOne
-    @MapsId("studentId")
+    @MapsId("student_Id")
     private Student student;
 
     @ManyToOne
-    @MapsId("courseId")
+    @MapsId("course_Id")
     private Course course;
-
-    @Column(nullable = false)
-    @Type(type = "org.hibernate.type.BooleanType")
-    private Boolean courseFull;
 
     @Column(nullable = false)
     @Type(type = "org.hibernate.type.BooleanType")
@@ -42,5 +38,20 @@ public class StudentHasCourse {
     @ManyToOne
     @JoinColumn(name = "ApplicationType_id")
     private ApplicationType applicationType;
+
+    public StudentHasCourse setId(StudentHasCourseId id){
+        this.id = id;
+        return this;
+    }
+
+    public StudentHasCourse setCourse(Course course){
+        this.course = course;
+        return this;
+    }
+
+    public StudentHasCourse setStudent(Student student){
+        this.student = student;
+        return this;
+    }
 
 }

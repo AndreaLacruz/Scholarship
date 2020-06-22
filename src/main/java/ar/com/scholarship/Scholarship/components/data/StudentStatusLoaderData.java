@@ -37,8 +37,8 @@ public class StudentStatusLoaderData implements ApplicationRunner {
 
             List<StudentStatus> statusList = Arrays.asList(
                     new StudentStatus("Estudiante Aprobado"),
-                    new StudentStatus("Estudiante Rechazado"),
-                    new StudentStatus("Pendiente")
+                    new StudentStatus("Estudiante Reprobado"),
+                    new StudentStatus("En progreso")
             );
             statusList.forEach(studentStatus -> statusRepository.save(studentStatus));
 
