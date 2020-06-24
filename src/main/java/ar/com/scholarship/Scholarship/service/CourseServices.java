@@ -15,10 +15,9 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+
 
 @Service("courseServices")
 public class CourseServices {
@@ -115,7 +114,7 @@ public class CourseServices {
             logicExceptionComponent.throwExceptionEntityNotFound("Course", id);
         } return course;
     }
-    
+
     public List<CourseDTO> findByAvailablePlaces(CourseDTO courseDTO){
         List<Course> openCourseList = courseRepository.findByAvailablePlaces();
         if (openCourseList.size() == 0)

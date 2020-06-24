@@ -40,7 +40,7 @@ public class StudentStatusLoaderData implements ApplicationRunner {
                     new StudentStatus("Estudiante en progreso"),
                     new StudentStatus("Estudiante finalizado")
             );
-            statusList.forEach(studentStatus -> statusRepository.save(studentStatus));
+            statusRepository.saveAll(statusList);
 
         }
     }

@@ -39,7 +39,7 @@ public class CompanyStatusLoaderData implements ApplicationRunner {
                     new CompanyStatus("Compañia Rechazada"),
                     new CompanyStatus("Pendiente")
             );
-            statusList.forEach(companyStatus -> companyStatusRepository.save(companyStatus));
+            companyStatusRepository.saveAll(statusList);
         }
     }
 }

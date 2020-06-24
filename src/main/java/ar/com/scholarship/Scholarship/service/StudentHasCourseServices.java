@@ -75,12 +75,9 @@ public class StudentHasCourseServices {
     //TODO
 
     public StudentHasCourseDTO saveApplicationByScholarship(studentHasCourseToSave){
-        StudentHasCourseId id = new StudentHasCourseId();
-        id.setCourseId(course.getId());
-        id.setStudentId(student.getId());
 
         StudentHasCourse studentHasCourseToSave = new StudentHasCourse();
-        studentHasCourseToSave.setId(id);
+        studentHasCourseToSave.setId(2L);
         studentHasCourseToSave.setCourseHasFinalized(false);
 
         StudentHasCourse studentHasCourseSaved = studentHasCourseRepository.save(studentHasCourseToSave);

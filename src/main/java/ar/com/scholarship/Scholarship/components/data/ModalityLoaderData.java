@@ -38,7 +38,7 @@ public class ModalityLoaderData implements ApplicationRunner {
                     new Modality(3L, "Combinados")
             );
 
-            modalities.forEach(modality -> modalityRepository.save(modality));
+            modalityRepository.saveAll(modalities);
         }
     }
 }

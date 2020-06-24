@@ -42,7 +42,7 @@ public class ApplicationTypeLoaderData implements ApplicationRunner {
                     new ApplicationType("Beca 50%"),
                     new ApplicationType("Beca 25%")
             );
-            typeList.forEach(applicationType -> applicationTypeRepository.save(applicationType));
+            applicationTypeRepository.saveAll(typeList);
         }
     }
 }

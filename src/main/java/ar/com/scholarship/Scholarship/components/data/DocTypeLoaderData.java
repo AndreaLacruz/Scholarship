@@ -41,8 +41,7 @@ public class DocTypeLoaderData implements ApplicationRunner {
                     new DocType(4L, "Licencia")
             );
 
-            docTypeList.forEach(docType ->
-                    docTypeRepository.save(docType));
+            docTypeRepository.saveAll(docTypeList);
         }
     }
 }
