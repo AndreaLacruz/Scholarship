@@ -24,6 +24,20 @@ public class BusinessLogicExceptionComponent {
         );
     }
 
+    public RuntimeException throwExceptionApplicationAlreadyExists(StudentHasCourseId id) {
+        ApiEntityError apiEntityError = new ApiEntityError(
+                "applicationType",
+                "ApplicationAlreadyExists",
+                "The application for course id " + id.getCourseId() + " and student id "
+                        + id.getStudentId() + "already exists"
+        );
+        return new BusinessLogicException(
+                "this application already exists",
+                HttpStatus.BAD_REQUEST,
+                apiEntityError
+        );
+    }
+
     public RuntimeException throwExceptionCourseSoldOut(String courseName){
         ApiEntityError apiEntityError = new ApiEntityError(
                 courseName, "Not Available", "No places available in this course" + courseName
@@ -37,7 +51,7 @@ public class BusinessLogicExceptionComponent {
                 "Not Available",
                 "The application to this course cant be made "
         ); return new BusinessLogicException(
-                "This application already exist", HttpStatus.BAD_REQUEST, apiEntityError
+                "This course is not available", HttpStatus.BAD_REQUEST, apiEntityError
         );
 
     }

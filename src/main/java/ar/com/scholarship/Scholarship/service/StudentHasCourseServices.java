@@ -114,22 +114,11 @@ public class StudentHasCourseServices {
         return studentHasCourseDTOSaved;
     }
 
-    public List<StudentHasCourseDTO> findCourseByFinalizedStudent(){
-        List<StudentHasCourse> all = studentHasCourseRepository.findAll();
-        List<StudentHasCourse> studentHasCourses = all.stream()
-                .filter(studentHasCourse -> studentHasCourse.getStudentStatus().equals(3L))
-                .collect(Collectors.toList());
-        List<StudentHasCourseDTO> studentHasCourseDTOList = studentHasCourseCycleMapper.toDto(studentHasCourses, context);
-        return studentHasCourseDTOList;
-    }
-
-    public List<StudentHasCourseDTO> findCourseByStudentInProgress(){
-        List<StudentHasCourse> all = studentHasCourseRepository.findAll();
-        List<StudentHasCourse> studentHasCourses = all.stream()
-                .filter(studentHasCourse -> studentHasCourse.getStudentStatus().equals(2L))
-                .collect(Collectors.toList());
-        List<StudentHasCourseDTO> studentHasCourseDTOList = studentHasCourseCycleMapper.toDto(studentHasCourses, context);
-        return studentHasCourseDTOList;
+    public List<StudentHasCourseDTO> findByStudentStatus(Long studentStatusId){
+        List<StudentHasCourse> studentHasCourses = studentHasCourseRepository
+                .findCourseByStudentStatus(studentStatusId);
+        List<StudentHasCourseDTO> courseListByStatus = studentHasCourseCycleMapper.toDto(studentHasCourses,context);
+        return courseListByStatus;
     }
 
     public List<StudentHasCourseDTO> findAll(){

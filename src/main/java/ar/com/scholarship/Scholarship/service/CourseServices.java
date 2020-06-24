@@ -11,6 +11,8 @@ import ar.com.scholarship.Scholarship.model.repository.CourseRepository;
 import ar.com.scholarship.Scholarship.model.repository.ModalityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -115,9 +117,8 @@ public class CourseServices {
     }
 
     //TODO verificar
-    public List<CourseDTO> findByAvailablePlaces(){
+    public List<CourseDTO> findByAvailablePlaces(CourseDTO courseDTO){
        List<Course> openCourseList = courseRepository.findByAvailablePlaces();
-       CourseDTO courseDTO = null;
        if (courseDTO.getPlaces() > 1){
            Course courseToSave = courseCycleMapper.toEntity((CourseDTO) openCourseList,context);
            Course courseAvailable =courseRepository.save(courseToSave);
@@ -138,7 +139,6 @@ public class CourseServices {
         List<Course> all = courseRepository.findByCategory(categoryId);
         List<CourseDTO> courseDTOList = courseCycleMapper.toDto(all, context);
         return courseDTOList;
-
     }
 
     public List<CourseDTO> findByCompanyAndCategory(Long companyId, Long categoryId){
