@@ -62,8 +62,12 @@ public class StudentHasCourseServices {
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(()-> logicExceptionComponent.throwExceptionEntityNotFound("course", courseId));
 
+        StudentHasCourseId studentHasCourseId = new StudentHasCourseId()
+                .setStudentId(studentId)
+                .setCourseId(courseId);
 
         StudentHasCourse studentHasCourseToSave = new StudentHasCourse()
+                .setId(studentHasCourseId)
                 .setCourse(course)
                 .setStudent(student)
                 .setApplicationType(applicationType)

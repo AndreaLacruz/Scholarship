@@ -31,11 +31,11 @@ public class BusinessLogicExceptionComponent {
         return new BusinessLogicException("No places available in this course", HttpStatus.BAD_REQUEST, apiEntityError);
     }
 
-    public RuntimeException throwExceptionApplicationAlreadyExist(StudentHasCourseId id){
+    public RuntimeException throwExceptionNotAvailableCourse(){
         ApiEntityError apiEntityError = new ApiEntityError(
-                "StudentHasCourse",
-                "Application Already Exist",
-                "The application to this course already exist " + id.getCourseId() + " on this student " + id.getStudentId()
+                "places",
+                "Not Available",
+                "The application to this course cant be made "
         ); return new BusinessLogicException(
                 "This application already exist", HttpStatus.BAD_REQUEST, apiEntityError
         );

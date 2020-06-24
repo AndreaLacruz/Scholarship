@@ -94,17 +94,9 @@ public class CourseServices {
     }
 
     public CourseDTO findByName(String name){
-        Optional<Course> byName = courseRepository.findByName(name);
-        CourseDTO courseDTO = null;
-        Long id = null;
-
-        if (byName.isPresent()){
-            Course courseByName = byName.get();
-            courseDTO = courseCycleMapper.toDto(courseByName, context);
-        } else {
-            logicExceptionComponent.throwExceptionEntityNotFound("Course", id);
-        }
-        return  courseDTO;
+        Course byName = (Course) courseRepository.findByName(name);
+        CourseDTO courseDTOList = courseCycleMapper.toDto(byName, context);
+        return courseDTOList;
     }
 
     public CourseDTO update(CourseDTO courseDTO, Long id){
@@ -122,39 +114,35 @@ public class CourseServices {
         } return course;
     }
 
+    //TODO verificar
     public List<CourseDTO> findByAvailablePlaces(){
-       List<Course> all = courseRepository.findAll();
-       List<Course> courseListAvailable = all.stream()
-               .filter(course -> course.getPlaces() > 0)
-               .collect(Collectors.toList());
-       List<CourseDTO> courseDTOListAvailable = courseCycleMapper.toDto(courseListAvailable, context);
-       return courseDTOListAvailable;
+       List<Course> openCourseList = courseRepository.findByAvailablePlaces();
+       CourseDTO courseDTO = null;
+       if (courseDTO.getPlaces() > 1){
+           Course courseToSave = courseCycleMapper.toEntity((CourseDTO) openCourseList,context);
+           Course courseAvailable =courseRepository.save(courseToSave);
+           courseDTO = courseCycleMapper.toDto(courseAvailable, context);
+        } else {
+           logicExceptionComponent.throwExceptionNotAvailableCourse();
+       }
+       return (List<CourseDTO>) courseDTO;
     }
 
-    public List<CourseDTO> findByCompany(String companyName){
-        List<Course> all = courseRepository.findAll();
-        List<Course> courseListByCompany = courseRepository.findByCompany(companyName);
+    public List<CourseDTO> findByCompany(Long companyId){
+        List<Course> courseListByCompany = courseRepository.findByCompany(companyId);
         List<CourseDTO> courseDTOList = courseCycleMapper.toDto(courseListByCompany,context);
         return courseDTOList;
     }
 
-    public List<CourseDTO> findByCategory(){
-        List<Course> all = courseRepository.findAll();
-        List<Course> courseListCategory = all.stream()
-                .filter(course -> course.getCategory().equals(course))
-                .collect(Collectors.toList());
-        List<CourseDTO> courseDTOList = courseCycleMapper.toDto(courseListCategory,context);
+    public List<CourseDTO> findByCategory(Long categoryId){
+        List<Course> all = courseRepository.findByCategory(categoryId);
+        List<CourseDTO> courseDTOList = courseCycleMapper.toDto(all, context);
         return courseDTOList;
+
     }
 
-    public List<CourseDTO> findByCompanyAndCategory(){
-        List<Course> all = courseRepository.findAll();
-        List<Course> courseList = new ArrayList<>();
-        for (Course course: all){
-            if (course.getCompany().equals(course) && course.getCategory().equals(course))
-                courseList.add(course);
-        }
-
+    public List<CourseDTO> findByCompanyAndCategory(Long companyId, Long categoryId){
+        List<Course> courseList = courseRepository.findByCompanyAndCategory(companyId, categoryId);
         List<CourseDTO> courseDTOList = courseCycleMapper.toDto(courseList,context);
         return courseDTOList;
     }
