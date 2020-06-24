@@ -115,18 +115,13 @@ public class CourseServices {
             logicExceptionComponent.throwExceptionEntityNotFound("Course", id);
         } return course;
     }
-
-    //TODO verificar
+    
     public List<CourseDTO> findByAvailablePlaces(CourseDTO courseDTO){
-       List<Course> openCourseList = courseRepository.findByAvailablePlaces();
-       if (courseDTO.getPlaces() > 1){
-           Course courseToSave = courseCycleMapper.toEntity((CourseDTO) openCourseList,context);
-           Course courseAvailable =courseRepository.save(courseToSave);
-           courseDTO = courseCycleMapper.toDto(courseAvailable, context);
-        } else {
-           logicExceptionComponent.throwExceptionNotAvailableCourse();
-       }
-       return (List<CourseDTO>) courseDTO;
+        List<Course> openCourseList = courseRepository.findByAvailablePlaces();
+        if (openCourseList.size() == 0)
+            logicExceptionComponent.throwExceptionNotAvailableCourse();
+        List<CourseDTO> openCourseListDto = courseCycleMapper.toDto(openCourseList, context);
+        return openCourseListDto;
     }
 
     public List<CourseDTO> findByCompany(Long companyId){

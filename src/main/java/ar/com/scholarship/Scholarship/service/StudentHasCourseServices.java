@@ -1,6 +1,7 @@
 package ar.com.scholarship.Scholarship.service;
 
 import ar.com.scholarship.Scholarship.components.BusinessLogicExceptionComponent;
+import ar.com.scholarship.Scholarship.model.dto.ApplicationCourseStudentDTO;
 import ar.com.scholarship.Scholarship.model.dto.StudentHasCourseDTO;
 import ar.com.scholarship.Scholarship.model.entity.*;
 import ar.com.scholarship.Scholarship.model.mapper.CycleAvoidingMappingContext;
@@ -12,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service("studentHasCourseServices")
 public class StudentHasCourseServices {
@@ -46,45 +46,35 @@ public class StudentHasCourseServices {
     @Qualifier("studentStatusRepository")
     private StudentStatusRepository studentStatusRepository;
 
-    public StudentHasCourseDTO saveApplication(StudentHasCourseDTO dto, Long studentId , Long courseId,
-                                               Long studentStatusId, Long applicationTypeId){
+    public StudentHasCourseDTO saveApplication(ApplicationCourseStudentDTO dto, Long studentId , Long courseId){
         StudentStatus studentStatus = studentStatusRepository
-                .findById(studentStatusId)
-                .orElseThrow(()-> logicExceptionComponent.throwExceptionEntityNotFound("student_Status", studentStatusId));
-
-        ApplicationType applicationType = applicationTypeRepository
-                .findById(applicationTypeId)
-                .orElseThrow(()-> logicExceptionComponent.throwExceptionEntityNotFound("applicationType", applicationTypeId));
-
+                .findById(1l)
+                .orElseThrow(()-> logicExceptionComponent.throwExceptionEntityNotFound("student_Status", 1L));
         Student student = studentRepository
                 .findById(studentId).orElseThrow( () -> logicExceptionComponent.throwExceptionEntityNotFound("student", studentId));
-
         Course course = courseRepository.findById(courseId)
                 .orElseThrow(()-> logicExceptionComponent.throwExceptionEntityNotFound("course", courseId));
-
         StudentHasCourseId studentHasCourseId = new StudentHasCourseId()
                 .setStudentId(studentId)
                 .setCourseId(courseId);
-
         StudentHasCourse studentHasCourseToSave = new StudentHasCourse()
                 .setId(studentHasCourseId)
                 .setCourse(course)
                 .setStudent(student)
-                .setApplicationType(applicationType)
-                .setStudentStatus(studentStatus);
-
-        //TODO como colocar application type en este codigo (el id de compra es 1L)
+                .setStudentStatus(studentStatus)
+                .setCourseHasFinalized(false);
         StudentHasCourseDTO studentHasCourseDTOSaved;
-        if (dto.getApplicationType().equals(1L)) {
+        if (dto.getIsBuy()) {
             studentHasCourseDTOSaved = this.saveApplicationByPurchase(studentHasCourseToSave);
         } else {
-            studentHasCourseDTOSaved = this.saveApplicationByScholarship(applicationType, student, course);
+            studentHasCourseDTOSaved = this.saveApplicationByScholarship(studentHasCourseToSave);
         }
         return studentHasCourseDTOSaved;
     }
 
-    public StudentHasCourseDTO saveApplicationByScholarship(ApplicationType type, Student student, Course course){
+    //TODO
 
+    public StudentHasCourseDTO saveApplicationByScholarship(studentHasCourseToSave){
         StudentHasCourseId id = new StudentHasCourseId();
         id.setCourseId(course.getId());
         id.setStudentId(student.getId());
@@ -92,8 +82,6 @@ public class StudentHasCourseServices {
         StudentHasCourse studentHasCourseToSave = new StudentHasCourse();
         studentHasCourseToSave.setId(id);
         studentHasCourseToSave.setCourseHasFinalized(false);
-        // TODO falta poner application type y ver como reflear todos los tipos
-        studentHasCourseToSave.getApplicationType().setId(2L);
 
         StudentHasCourse studentHasCourseSaved = studentHasCourseRepository.save(studentHasCourseToSave);
         StudentHasCourseDTO studentHasCourseDTOSaved = studentHasCourseCycleMapper.toDto(studentHasCourseSaved,context);
@@ -104,10 +92,10 @@ public class StudentHasCourseServices {
         Integer purchasedCourseCounter = studentHasCourseToSave.getCourse().getOpenPlacesCounter();
         if (purchasedCourseCounter == 0)
             throw logicExceptionComponent.throwExceptionCourseSoldOut(studentHasCourseToSave.getCourse().getName());
-
-        studentHasCourseToSave.setCourseHasFinalized(false);
-        // TODO descubrir como se debe aplicar lo siguiente
-        studentHasCourseToSave.getApplicationType().setId(1L);
+        ApplicationType applicationType = applicationTypeRepository
+                .findById(1L)
+                .orElseThrow(()-> logicExceptionComponent.throwExceptionEntityNotFound("applicationType", 1L));
+        studentHasCourseToSave.setApplicationType(applicationType);
         studentHasCourseToSave.getCourse().setOpenPlacesCounter(purchasedCourseCounter - 1);
         StudentHasCourse studentHasCourseSave = studentHasCourseRepository.save(studentHasCourseToSave);
         StudentHasCourseDTO studentHasCourseDTOSaved = studentHasCourseCycleMapper.toDto(studentHasCourseSave, context);

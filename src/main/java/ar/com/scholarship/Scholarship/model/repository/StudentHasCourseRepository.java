@@ -11,7 +11,6 @@ import java.util.List;
 @Component("studentHasCourseRepository")
 public interface StudentHasCourseRepository extends JpaRepository<StudentHasCourse, Long> {
 
-    //TODO el status student
-    @Query(value = "SELECT * FROM StudentStatus s INNER JOIN StudentHasCourse sc ON s.id = sc.Student_id WHERE studentStatus_id = :studentStatusId", nativeQuery = true)
+    @Query(value = "SELECT c.* FROM Course c INNER JOIN StudentHasCourse sc WHERE sc.StudentStatus_id = 2 GROUP BY c.id", nativeQuery = true)
     List<StudentHasCourse> findCourseByStudentStatus(@Param("studentStatusId") Long studentStatusId);
     }

@@ -55,5 +55,18 @@ public class BusinessLogicExceptionComponent {
         );
 
     }
+
+    public RuntimeException throwExceptionScholarshipDenied() {
+        ApiEntityError apiEntityError = new ApiEntityError(
+                "applicationType",
+                "ApplicationTypeDenied",
+                "Missing Socio Economic Status from Student"
+        );
+        return new BusinessLogicException(
+                "Scholarship denied",
+                HttpStatus.BAD_REQUEST,
+                apiEntityError
+        );
+    }
 }
 

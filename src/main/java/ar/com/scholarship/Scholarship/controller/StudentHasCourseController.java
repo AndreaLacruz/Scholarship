@@ -1,5 +1,6 @@
 package ar.com.scholarship.Scholarship.controller;
 
+import ar.com.scholarship.Scholarship.model.dto.ApplicationCourseStudentDTO;
 import ar.com.scholarship.Scholarship.model.dto.ApplicationTypeDTO;
 import ar.com.scholarship.Scholarship.model.dto.StudentHasCourseDTO;
 import ar.com.scholarship.Scholarship.model.dto.StudentStatusDTO;
@@ -18,15 +19,12 @@ public class StudentHasCourseController {
     @Qualifier("studentHasCourseServices")
     private StudentHasCourseServices studentHasCourseServices;
 
-    @PutMapping({"/student/{studentId}/course/{courseId}/studentStatusId/{studentStatusId}/applicationTypeId/{applicationTypeId}",
-            "/student/{studentId}/course/{courseId}/studentStatus/{studentStatusId}/applicationTypeId/{applicationTypeId}/"})
-    //  localhost:8080/student/1/courses/1/studentStatus/1/applicationType/1/
+    // http://localhost:8080/student/1/course/1
 
+    @PutMapping({"/student/{studentId}/course/{courseId}", "/student/{studentId}/course/{courseId}/"})
     public ResponseEntity addNewStudentToCourse(
-            @Valid @RequestBody StudentHasCourseDTO dto, @PathVariable Long studentId,
-            @PathVariable Long courseId, @PathVariable Long studentStatusId, @PathVariable Long applicationTypeId){
-        StudentHasCourseDTO studentStatusDTOSaving = studentHasCourseServices.saveApplication(
-               dto ,applicationTypeId, studentId, courseId, studentStatusId);
+            @Valid @RequestBody ApplicationCourseStudentDTO dto, @PathVariable Long studentId, @PathVariable Long courseId){
+        StudentHasCourseDTO studentStatusDTOSaving = studentHasCourseServices.saveApplication(dto, studentId, courseId);
         return ResponseEntity.ok(studentStatusDTOSaving);
     }
 

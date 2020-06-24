@@ -17,7 +17,7 @@ public class ApplicationType {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 25)
+    @Column(nullable = false, length = 30)
     private String type;
 
     @OneToMany(mappedBy = "applicationType")

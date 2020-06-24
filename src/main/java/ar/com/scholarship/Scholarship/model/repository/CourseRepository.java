@@ -20,8 +20,7 @@ public interface CourseRepository extends JpaRepository<Course, Long> {
     @Query(value = "SELECT * FROM Course c WHERE c.company_id = :companyId", nativeQuery = true)
     List<Course> findByCompany(@Param("company") Long companyId);
 
-    // TODO buscar el query verdadero (buscar en curso los cupos mayores a 1)
-    @Query(value = "SELECT * FROM Course WHERE openPlacesCounter > 1 OR scholarshipCounter > 0", nativeQuery = true)
+    @Query(value = "SELECT * FROM Course c WHERE c.openPlacesCounter > 0 OR c.scholarshipCounter > 0 ", nativeQuery = true)
     List<Course> findByAvailablePlaces();
 
     @Query(value = "SELECT * FROM Course co WHERE co.company_id = :companyId AND c = c.courseCategory_id = :courseCategoryId", nativeQuery = true)

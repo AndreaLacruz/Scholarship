@@ -67,4 +67,9 @@ public class StudentHasCourse implements Serializable {
         return this;
     }
 
+    public StudentHasCourse setCourseHasFinalized(Boolean courseHasFinalized) {
+        this.courseHasFinalized = courseHasFinalized;
+        return this;
+    }
+
 }
