@@ -17,7 +17,7 @@ import javax.validation.constraints.NotNull;
 public class StatusProgressDTO {
 
     @NotNull(message = "item filled is required")
-    private Long studentStatusId;
+    private Long statusProgressId;
 
 }
     /*

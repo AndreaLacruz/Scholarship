@@ -1,6 +1,5 @@
 package ar.com.scholarship.Scholarship.model.entity;
 
-import ar.com.scholarship.Scholarship.model.dto.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,7 +7,6 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
 
 
 @Setter
@@ -67,6 +65,7 @@ public class StudentHasCourse implements Serializable {
         this.courseHasFinalized = courseHasFinalized;
         return this;
     }
+
 
     public StudentHasCourse setApplicationType(ApplicationType applicationType) {
         this.applicationType = applicationType;

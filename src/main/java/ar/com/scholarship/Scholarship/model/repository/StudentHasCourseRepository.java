@@ -7,13 +7,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.Optional;
 
 @Component("studentHasCourseRepository")
 public interface StudentHasCourseRepository extends JpaRepository<StudentHasCourse, Long> {
 
-    @Query(value = "SELECT c.* FROM Course c INNER JOIN StudentHasCourse sc WHERE sc.StudentStatus_id = 2 GROUP BY c.id", nativeQuery = true)
-    List<StudentHasCourse> findCourseByStudentStatus(@Param("studentStatusId") Long studentStatusId);
+    @Query(value = "SELECT c.* FROM Course c INNER JOIN StudentHasCourse sc WHERE sc.StudentStatus_id = 1 GROUP BY c.id", nativeQuery = true)
+    StudentHasCourse findCourseByStudentStatus(@Param("studentStatusId") Long studentStatusId);
 
 }

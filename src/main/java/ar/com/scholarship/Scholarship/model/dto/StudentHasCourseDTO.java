@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.List;
 
 @Setter
 @Getter
@@ -16,7 +18,7 @@ import javax.validation.constraints.NotNull;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @JsonPropertyOrder({"id", "student","student_status", "course", "application_type", "course_has_finalized"})
-public class StudentHasCourseDTO {
+public class StudentHasCourseDTO implements Serializable {
 
 
     private StudentDTO student;

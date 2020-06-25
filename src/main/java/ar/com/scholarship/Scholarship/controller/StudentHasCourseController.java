@@ -2,8 +2,8 @@ package ar.com.scholarship.Scholarship.controller;
 
 import ar.com.scholarship.Scholarship.model.dto.ApplicationCourseStudentDTO;
 import ar.com.scholarship.Scholarship.model.dto.ScholarshipApprovalDTO;
+import ar.com.scholarship.Scholarship.model.dto.StatusProgressDTO;
 import ar.com.scholarship.Scholarship.model.dto.StudentHasCourseDTO;
-import ar.com.scholarship.Scholarship.model.entity.StudentHasCourse;
 import ar.com.scholarship.Scholarship.service.StudentHasCourseServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -28,7 +28,6 @@ public class StudentHasCourseController {
         return ResponseEntity.ok(studentStatusDTOSaving);
     }
 
-    //TODO probar
 
     // http://localhost:8080/student/1/course/1/approval
     @PutMapping({"/student/{studentId}/course/{courseId}/approval", "/student/{studentId}/course/{courseId}/approval/"})
@@ -38,4 +37,11 @@ public class StudentHasCourseController {
         return ResponseEntity.ok(studentHasCourseDTOUpdated);
     }
 
+    // http://localhost:8080/student/1/course/1/status-progress/
+    @PutMapping({"/student/{studentId}/course/{courseId}/status-progress/", "/student/{studentId}/course/{courseId}/status-progress/"})
+    public ResponseEntity studentProgressUpdate(
+            @Valid @RequestBody StatusProgressDTO progressDTO, @PathVariable Long studentId, @PathVariable Long courseId){
+        StudentHasCourseDTO statusProgressDTOUpdate = studentHasCourseServices.findByStudentStatus(progressDTO, studentId, courseId);
+        return ResponseEntity.ok(statusProgressDTOUpdate);
+    }
 }

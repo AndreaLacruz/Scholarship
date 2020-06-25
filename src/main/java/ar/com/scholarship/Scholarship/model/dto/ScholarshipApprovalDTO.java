@@ -27,6 +27,5 @@ public class ScholarshipApprovalDTO {
 {
     "scholarship_approval":true,
     "Scholarship_Type_id": 3 - 6,
-    "application_type_id": 3
 }
  */

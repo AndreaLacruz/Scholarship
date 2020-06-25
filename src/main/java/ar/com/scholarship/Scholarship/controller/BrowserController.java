@@ -1,7 +1,6 @@
 package ar.com.scholarship.Scholarship.controller;
 
 import ar.com.scholarship.Scholarship.model.dto.CourseDTO;
-import ar.com.scholarship.Scholarship.model.dto.StudentHasCourseDTO;
 import ar.com.scholarship.Scholarship.service.CourseServices;
 import ar.com.scholarship.Scholarship.service.StudentHasCourseServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +28,6 @@ public class BrowserController {
         return ResponseEntity.ok(allCourses);
     }
 
-
     @GetMapping({"/companies/{companyId}", "/companies/{companyId}/"}) // http://localhost:8080/browse/companies/1
     public ResponseEntity getCoursesByCompany(@PathVariable Long companyId){
         List<CourseDTO> allCourses = courseServices.findByCompany(companyId);
@@ -43,14 +41,6 @@ public class BrowserController {
         return ResponseEntity.ok(allCourses);
     }
 
-    // TODO hacer service
-    @GetMapping({"/studentStatus/{studentStatusId}", "/studentStatus/{studentStatusId}/"}) // http://localhost:8080/browse/studentStatus/1
-    public ResponseEntity getCoursesByStudentStatus(@PathVariable Long studentStatusId){
-        List<StudentHasCourseDTO> studentHasCourseDTOList = studentHasCourseServices.findByStudentStatus(studentStatusId);
-        return  ResponseEntity.ok(studentHasCourseDTOList);
-    }
-
-    // TODO revisar
     @GetMapping({"/openCourses", "/openCourses/"}) // http://localhost:8080/browse/openCourses/
     public ResponseEntity getOpenPlacesCourses(){
         List<CourseDTO> courseDTOList = courseServices.findByAvailablePlaces();

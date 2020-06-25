@@ -3,6 +3,7 @@ package ar.com.scholarship.Scholarship.service;
 import ar.com.scholarship.Scholarship.components.BusinessLogicExceptionComponent;
 import ar.com.scholarship.Scholarship.model.dto.ApplicationCourseStudentDTO;
 import ar.com.scholarship.Scholarship.model.dto.ScholarshipApprovalDTO;
+import ar.com.scholarship.Scholarship.model.dto.StatusProgressDTO;
 import ar.com.scholarship.Scholarship.model.dto.StudentHasCourseDTO;
 import ar.com.scholarship.Scholarship.model.entity.*;
 import ar.com.scholarship.Scholarship.model.mapper.CycleAvoidingMappingContext;
@@ -101,26 +102,34 @@ public class StudentHasCourseServices {
         return studentHasCourseDTOSaved;
     }
 
-    // REHACER
-    public List<StudentHasCourseDTO> findByStudentStatus(Long studentStatusId){
-        List<StudentHasCourse> studentHasCourses = studentHasCourseRepository
-                .findCourseByStudentStatus(studentStatusId);
-        List<StudentHasCourseDTO> courseListByStatus = studentHasCourseCycleMapper.toDto(studentHasCourses,context);
-        return courseListByStatus;
-    }
-
-    //TODO Probar
-    public StudentHasCourseDTO courseScholarshipApproval(ScholarshipApprovalDTO approvalDTO, Long courseId, Long studentId){
+    //TODO Revisar
+    public StudentHasCourseDTO findByStudentStatus(StatusProgressDTO statusId, Long studentId, Long courseId){
         StudentHasCourseId studentHasCourseId = new StudentHasCourseId()
                 .setStudentId(studentId)
                 .setCourseId(courseId);
         StudentHasCourse studentHasCourse = studentHasCourseRepository
-                .findById(studentId)
-                .orElseThrow(()-> logicExceptionComponent.throwExceptionEntityNotFound("StudentHasCourse", studentId));
+                .findCourseByStudentStatus(studentHasCourseId);
+        if (statusId.equals(3L)){
+            studentHasCourse.setCourseHasFinalized(true);
+        } else {
+            studentHasCourse.setStudentStatus(statusId.getStatusProgressId());
+        }
+        StudentHasCourseDTO studentHasCourseDTOUpdated = studentHasCourseCycleMapper.toDto( studentHasCourse, context);
+        return studentHasCourseDTOUpdated;
+    }
+
+
+    // TODO REVISAR
+    public StudentHasCourseDTO courseScholarshipApproval(ScholarshipApprovalDTO approvalDTO, Long courseId, Long studentId){
+        StudentHasCourse studentHasCourse = studentHasCourseRepository
+                .findById(approvalDTO.getScholarshipTypeId())
+                .orElseThrow(()-> logicExceptionComponent.throwExceptionScholarshipDenied());
         Integer scholarshipCounter = studentHasCourse.getCourse().getScholarshipCounter();
         if (scholarshipCounter == 0)
             throw logicExceptionComponent.throwExceptionCourseSoldOut(studentHasCourse.getCourse().getName());
         if (approvalDTO.getScholarshipApproval()){
+            studentHasCourse.setStudentStatus(approvalDTO.getScholarshipApproval());
+            studentHasCourse.setApplicationType(approvalDTO.getScholarshipTypeId());
             studentHasCourse.getCourse().setScholarshipCounter(scholarshipCounter -1);
         }
         StudentHasCourseDTO studentHasCourseDTOUpdated = studentHasCourseCycleMapper.toDto(studentHasCourse, context);
