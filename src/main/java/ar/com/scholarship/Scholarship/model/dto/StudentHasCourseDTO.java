@@ -31,6 +31,10 @@ public class StudentHasCourseDTO {
     private StudentStatusDTO studentStatus;
     private ApplicationTypeDTO applicationType;
 
+    public StudentHasCourseDTO setApplicationType(ApplicationTypeDTO applicationType) {
+        this.applicationType = applicationType;
+        return this;
+    }
 }
 
 /*

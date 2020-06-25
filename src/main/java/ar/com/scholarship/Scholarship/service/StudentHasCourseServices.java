@@ -2,6 +2,7 @@ package ar.com.scholarship.Scholarship.service;
 
 import ar.com.scholarship.Scholarship.components.BusinessLogicExceptionComponent;
 import ar.com.scholarship.Scholarship.model.dto.ApplicationCourseStudentDTO;
+import ar.com.scholarship.Scholarship.model.dto.ScholarshipApprovalDTO;
 import ar.com.scholarship.Scholarship.model.dto.StudentHasCourseDTO;
 import ar.com.scholarship.Scholarship.model.entity.*;
 import ar.com.scholarship.Scholarship.model.mapper.CycleAvoidingMappingContext;
@@ -100,11 +101,30 @@ public class StudentHasCourseServices {
         return studentHasCourseDTOSaved;
     }
 
+    // REHACER
     public List<StudentHasCourseDTO> findByStudentStatus(Long studentStatusId){
         List<StudentHasCourse> studentHasCourses = studentHasCourseRepository
                 .findCourseByStudentStatus(studentStatusId);
         List<StudentHasCourseDTO> courseListByStatus = studentHasCourseCycleMapper.toDto(studentHasCourses,context);
         return courseListByStatus;
+    }
+
+    //TODO Probar
+    public StudentHasCourseDTO courseScholarshipApproval(ScholarshipApprovalDTO approvalDTO, Long courseId, Long studentId){
+        StudentHasCourseId studentHasCourseId = new StudentHasCourseId()
+                .setStudentId(studentId)
+                .setCourseId(courseId);
+        StudentHasCourse studentHasCourse = studentHasCourseRepository
+                .findById(studentId)
+                .orElseThrow(()-> logicExceptionComponent.throwExceptionEntityNotFound("StudentHasCourse", studentId));
+        Integer scholarshipCounter = studentHasCourse.getCourse().getScholarshipCounter();
+        if (scholarshipCounter == 0)
+            throw logicExceptionComponent.throwExceptionCourseSoldOut(studentHasCourse.getCourse().getName());
+        if (approvalDTO.getScholarshipApproval()){
+            studentHasCourse.getCourse().setScholarshipCounter(scholarshipCounter -1);
+        }
+        StudentHasCourseDTO studentHasCourseDTOUpdated = studentHasCourseCycleMapper.toDto(studentHasCourse, context);
+        return studentHasCourseDTOUpdated;
     }
 
     public List<StudentHasCourseDTO> findAll(){

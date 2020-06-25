@@ -54,7 +54,7 @@ public class CompanyController {
     }
 
     @DeleteMapping({"/companies/{id}", "/companies/{id}/"}) // http://localhost:8080/companies/1
-    public ResponseEntity deleteCompany(Long id){
+    public ResponseEntity deleteCompany(@PathVariable Long id){
         companyServices.delete(id);
         return ResponseEntity.noContent().build();
     }
@@ -87,7 +87,7 @@ public class CompanyController {
     }
 
     @DeleteMapping({"/managers/{id}", "/managers/{id}/"}) // http://localhost:8080/managers/1
-    public ResponseEntity deleteManager(Long id){
+    public ResponseEntity deleteManager(@PathVariable Long id){
         managerServices.delete(id);
         return ResponseEntity.noContent().build();
     }
@@ -121,7 +121,7 @@ public class CompanyController {
     }
 
     @DeleteMapping({"/courses/{id}", "/courses/{id}/"}) // http://localhost:8080/courses/1
-    public ResponseEntity deleteCourses(Long id){
+    public ResponseEntity deleteCourses(@PathVariable Long id){
         courseServices.delete(id);
         return ResponseEntity.noContent().build();
     }

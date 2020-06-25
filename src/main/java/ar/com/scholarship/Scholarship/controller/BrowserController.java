@@ -29,14 +29,13 @@ public class BrowserController {
         return ResponseEntity.ok(allCourses);
     }
 
-    // TODO recursividad infinita
+
     @GetMapping({"/companies/{companyId}", "/companies/{companyId}/"}) // http://localhost:8080/browse/companies/1
     public ResponseEntity getCoursesByCompany(@PathVariable Long companyId){
         List<CourseDTO> allCourses = courseServices.findByCompany(companyId);
         return ResponseEntity.ok(allCourses);
     }
 
-    // TODO no funciona la consulta en postman
     @GetMapping({"/company/{companyId/category/{categoryId}", "/company/{companyId/category/{categoryId}"})
     // http://localhost:8080/browse/company/1/category/1
     public ResponseEntity getCoursesByCompanyAndCategory(@PathVariable Long companyId, @PathVariable Long courseCategoryId){
@@ -44,13 +43,14 @@ public class BrowserController {
         return ResponseEntity.ok(allCourses);
     }
 
+    // TODO hacer service
     @GetMapping({"/studentStatus/{studentStatusId}", "/studentStatus/{studentStatusId}/"}) // http://localhost:8080/browse/studentStatus/1
     public ResponseEntity getCoursesByStudentStatus(@PathVariable Long studentStatusId){
         List<StudentHasCourseDTO> studentHasCourseDTOList = studentHasCourseServices.findByStudentStatus(studentStatusId);
         return  ResponseEntity.ok(studentHasCourseDTOList);
     }
 
-    // TODO recursividad infinita
+    // TODO revisar
     @GetMapping({"/openCourses", "/openCourses/"}) // http://localhost:8080/browse/openCourses/
     public ResponseEntity getOpenPlacesCourses(){
         List<CourseDTO> courseDTOList = courseServices.findByAvailablePlaces();

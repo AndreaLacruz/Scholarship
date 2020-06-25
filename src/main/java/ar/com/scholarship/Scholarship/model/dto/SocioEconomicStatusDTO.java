@@ -43,6 +43,7 @@ public class SocioEconomicStatusDTO implements Serializable {
     @NotNull(message = "student_id is required")
     private Long studentId;
 
+    @JsonPropertyOrder({"socioEconomicStatus"})
     private StudentDTO student;
 
 

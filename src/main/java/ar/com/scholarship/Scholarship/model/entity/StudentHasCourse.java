@@ -51,10 +51,6 @@ public class StudentHasCourse implements Serializable {
         return this;
     }
 
-    public StudentHasCourse setApplicationType(ApplicationType applicationTypeId) {
-        this.applicationType = applicationTypeId;
-        return this;
-    }
 
     public StudentHasCourse setCourse(Course course){
         this.course = course;
@@ -72,4 +68,8 @@ public class StudentHasCourse implements Serializable {
         return this;
     }
 
+    public StudentHasCourse setApplicationType(ApplicationType applicationType) {
+        this.applicationType = applicationType;
+        return this;
+    }
 }
