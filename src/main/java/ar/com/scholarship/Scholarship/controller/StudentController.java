@@ -8,6 +8,7 @@ import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -28,6 +29,7 @@ public class StudentController {
 
     //STUDENT
 
+
     @PostMapping({"/students", "/students/"}) // http://localhost:8080/students
     public ResponseEntity addNewStudent(@Valid @RequestBody StudentDTO studentDTO) throws URISyntaxException {
         StudentDTO studentDTOSaved = studentServices.save(studentDTO);
@@ -41,11 +43,13 @@ public class StudentController {
         return ResponseEntity.ok(all);
     }
 
+
     @DeleteMapping({"/students/{id}", "/students/{id}/"}) // http://localhost:8080/students/1
     public ResponseEntity deleteStudent(Long id){
         studentServices.delete(id);
         return ResponseEntity.noContent().build();
     }
+
 
     @PutMapping({"/students/{id}", "/students/{id}/"}) // http://localhost:8080/students/1
     public ResponseEntity updateStudent(@Valid @RequestBody StudentDTO studentDTO, Long id){
@@ -55,6 +59,7 @@ public class StudentController {
 
     // SOCIO ECONOMIC STATUS
 
+
     @SneakyThrows
     @PostMapping({"/socioEconomicStatus", "/socioEconomicStatus/"}) // http://localhost:8080/socioEconomicStatus
     public ResponseEntity addNewSocioEconomicStatus(@Valid @RequestBody SocioEconomicStatusDTO socioEconomicStatusDTO) throws URISyntaxException {
@@ -63,6 +68,7 @@ public class StudentController {
                 .created(new URI("/socioEconomicStatus" + socioEconomicStatusDTOSaved.getId()))
                 .body(socioEconomicStatusDTOSaved);
     }
+
 
     @DeleteMapping({"/socioEconomicStatus/{id}", "/socioEconomicStatus/{id}/"}) // http://localhost:8080/socioEconomicStatus/1
     public ResponseEntity deleteSocioEconomicStatus(Long id){

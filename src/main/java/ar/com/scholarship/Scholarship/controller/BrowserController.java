@@ -23,28 +23,28 @@ public class BrowserController {
     @Qualifier("studentHasCourseServices")
     private StudentHasCourseServices studentHasCourseServices;
 
-    @GetMapping({"/category/{categoryId}", "/category/{categoryId}/"}) // http://localhost:8080/browse/category/1
-    public ResponseEntity getCourseByCategory(@PathVariable Long categoryId){
-        List<CourseDTO> allCourses = courseServices.findByCategory(categoryId);
+    @GetMapping({"/category/{categoryId}", "/category/{categoryId}/"}) // http://localhost:8080/browse/category/1/1?page=0
+    public ResponseEntity getCourseByCategory(@RequestParam Optional<Integer> page,@PathVariable Long categoryId){
+        List<CourseDTO> allCourses = courseServices.findByCategory(categoryId, page.orElse(0));
         return ResponseEntity.ok(allCourses);
     }
 
-    @GetMapping({"/companies/{companyId}", "/companies/{companyId}/"}) // http://localhost:8080/browse/companies/1
-    public ResponseEntity getCoursesByCompany(@PathVariable Long companyId){
-        List<CourseDTO> allCourses = courseServices.findByCompany(companyId);
+    @GetMapping({"/companies/{companyId}", "/companies/{companyId}/"}) // http://localhost:8080/browse/companies/1/1?page=0
+    public ResponseEntity getCoursesByCompany(@RequestParam Optional<Integer> page,@PathVariable Long companyId){
+        List<CourseDTO> allCourses = courseServices.findByCompany(companyId, page.orElse(0));
         return ResponseEntity.ok(allCourses);
     }
 
     @GetMapping({"/company/{companyId/category/{categoryId}", "/company/{companyId/category/{categoryId}"})
-    // http://localhost:8080/browse/company/1/category/1
-    public ResponseEntity getCoursesByCompanyAndCategory(@PathVariable Long companyId, @PathVariable Long courseCategoryId){
-        List<CourseDTO> allCourses = courseServices.findByCompanyAndCategory(companyId, courseCategoryId);
+    // http://localhost:8080/browse/company/1/category/1/1?page=0
+    public ResponseEntity getCoursesByCompanyAndCategory(@RequestParam Optional<Integer> page, @PathVariable Long companyId, @PathVariable Long courseCategoryId){
+        List<CourseDTO> allCourses = courseServices.findByCompanyAndCategory(companyId, courseCategoryId, page.orElse(0));
         return ResponseEntity.ok(allCourses);
     }
 
-    @GetMapping({"/openCourses", "/openCourses/"}) // http://localhost:8080/browse/openCourses/
-    public ResponseEntity getOpenPlacesCourses(){
-        List<CourseDTO> courseDTOList = courseServices.findByAvailablePlaces();
+    @GetMapping({"/openCourses", "/openCourses/"}) // http://localhost:8080/browse/openCourses/1?page=0
+    public ResponseEntity getOpenPlacesCourses(@RequestParam Optional<Integer> page){
+        List<CourseDTO> courseDTOList = courseServices.findByAvailablePlaces(page.orElse(0));
         return ResponseEntity.ok(courseDTOList);
     }
 
