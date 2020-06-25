@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/browse")
@@ -46,5 +47,13 @@ public class BrowserController {
         List<CourseDTO> courseDTOList = courseServices.findByAvailablePlaces();
         return ResponseEntity.ok(courseDTOList);
     }
+
+    // http://localhost:8080/browse/course/student-status-progress/1?page=0
+    @GetMapping({"/course/student-status-progress/{studentStatusId}", "/course/student-status-progress/{studentStatusId}/"})
+    public ResponseEntity studentProgressUpdate(@PathVariable Long studentStatusId, @RequestParam Optional<Integer> page){
+        List<CourseDTO> coursesByStudentStatusProgress = courseServices.getAllCoursesByStudentStatusProgress(studentStatusId, page.orElse(0));
+        return ResponseEntity.ok(coursesByStudentStatusProgress);
+    }
+
 
 }

@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 
 
 @Component("studentHasCourseRepository")
-public interface StudentHasCourseRepository extends JpaRepository<StudentHasCourse, Long> {
+public interface StudentHasCourseRepository extends JpaRepository<StudentHasCourse, StudentHasCourseId> {
 
     @Query(value = "SELECT c.* FROM Course c INNER JOIN StudentHasCourse sc WHERE sc.StudentStatus_id = 1 GROUP BY c.id", nativeQuery = true)
     StudentHasCourse findCourseByStudentStatus(@Param("studentStatusId") Long studentStatusId);

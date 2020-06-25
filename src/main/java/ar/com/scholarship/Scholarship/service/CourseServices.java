@@ -11,6 +11,9 @@ import ar.com.scholarship.Scholarship.model.repository.CourseRepository;
 import ar.com.scholarship.Scholarship.model.repository.ModalityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -92,12 +95,6 @@ public class CourseServices {
         }
     }
 
-    public CourseDTO findByName(String name){
-        Course byName = (Course) courseRepository.findByName(name);
-        CourseDTO courseDTOList = courseCycleMapper.toDto(byName, context);
-        return courseDTOList;
-    }
-
     public CourseDTO update(CourseDTO courseDTO, Long id){
         Optional<Course> byIdOptional = courseRepository.findById(id);
         CourseDTO course = null;
@@ -136,6 +133,14 @@ public class CourseServices {
     public List<CourseDTO> findByCompanyAndCategory(Long companyId, Long categoryId){
         List<Course> courseList = courseRepository.findByCompanyAndCategory(companyId, categoryId);
         List<CourseDTO> courseDTOList = courseCycleMapper.toDto(courseList,context);
+        return courseDTOList;
+    }
+
+    public List<CourseDTO> getAllCoursesByStudentStatusProgress(Long studentStatusId, Integer page) {
+        PageRequest pageRequest = PageRequest.of(page, 5, Sort.Direction.ASC, "id");
+        Page<Course> allCoursesByStundetStatusProgressPage = courseRepository.findAllCoursesByStudentStatusProgress(studentStatusId, pageRequest);
+        List<Course> allCoursesByStundetStatusProgress = allCoursesByStundetStatusProgressPage.getContent();
+        List<CourseDTO> courseDTOList = courseCycleMapper.toDto(allCoursesByStundetStatusProgress, context);
         return courseDTOList;
     }
 }

@@ -102,37 +102,68 @@ public class StudentHasCourseServices {
         return studentHasCourseDTOSaved;
     }
 
-    //TODO Revisar
-    public StudentHasCourseDTO findByStudentStatus(StatusProgressDTO statusId, Long studentId, Long courseId){
+    public StudentHasCourseDTO findByStudentStatus(Long statusId, Long studentId, Long courseId) {
+        Student student = studentRepository
+                .findById(studentId)
+                .orElseThrow(() -> logicExceptionComponent.throwExceptionEntityNotFound("Student", studentId));
+        Course course = courseRepository
+                .findById(courseId)
+                .orElseThrow(() -> logicExceptionComponent.throwExceptionEntityNotFound("Course", courseId));
+        StudentStatus studentStatus = studentStatusRepository
+                .findById(statusId)
+                .orElseThrow(() -> logicExceptionComponent.throwExceptionEntityNotFound("StudentStatus", statusId));
         StudentHasCourseId studentHasCourseId = new StudentHasCourseId()
                 .setStudentId(studentId)
                 .setCourseId(courseId);
         StudentHasCourse studentHasCourse = studentHasCourseRepository
-                .findCourseByStudentStatus(studentHasCourseId);
-        if (statusId.equals(3L)){
+                .findById(studentHasCourseId)
+                .orElseThrow(() -> logicExceptionComponent.throwExceptionEntityNotFound("StudentHasCourse", studentHasCourseId));
+        studentHasCourse.setStudentStatus(studentStatus);
+        if (studentStatus.getStatus().equals("Estudiante finalizado")) {
             studentHasCourse.setCourseHasFinalized(true);
-        } else {
-            studentHasCourse.setStudentStatus(statusId.getStatusProgressId());
         }
-        StudentHasCourseDTO studentHasCourseDTOUpdated = studentHasCourseCycleMapper.toDto( studentHasCourse, context);
+        StudentHasCourse studentHasCourseUpdated = studentHasCourseRepository.save(studentHasCourse);
+        StudentHasCourseDTO studentHasCourseDTOUpdated = studentHasCourseCycleMapper.toDto(studentHasCourseUpdated, context);
         return studentHasCourseDTOUpdated;
     }
 
 
-    // TODO REVISAR
-    public StudentHasCourseDTO courseScholarshipApproval(ScholarshipApprovalDTO approvalDTO, Long courseId, Long studentId){
-        StudentHasCourse studentHasCourse = studentHasCourseRepository
-                .findById(approvalDTO.getScholarshipTypeId())
-                .orElseThrow(()-> logicExceptionComponent.throwExceptionScholarshipDenied());
-        Integer scholarshipCounter = studentHasCourse.getCourse().getScholarshipCounter();
+    public StudentHasCourseDTO courseScholarshipApproval(ScholarshipApprovalDTO approvalDTO, Long courseId, Long studentId) {
+        Student student = studentRepository
+                .findById(studentId)
+                .orElseThrow(() -> logicExceptionComponent.throwExceptionEntityNotFound("Student", studentId));
+        Course course = courseRepository
+                .findById(courseId)
+                .orElseThrow(() -> logicExceptionComponent.throwExceptionEntityNotFound("Course", courseId));
+        Integer scholarshipCounter = course.getScholarshipCounter();
         if (scholarshipCounter == 0)
-            throw logicExceptionComponent.throwExceptionCourseSoldOut(studentHasCourse.getCourse().getName());
-        if (approvalDTO.getScholarshipApproval()){
-            studentHasCourse.setStudentStatus(approvalDTO.getScholarshipApproval());
-            studentHasCourse.setApplicationType(approvalDTO.getScholarshipTypeId());
-            studentHasCourse.getCourse().setScholarshipCounter(scholarshipCounter -1);
+            throw logicExceptionComponent.throwExceptionCourseSoldOut(course.getName());
+        ApplicationType applicationType = applicationTypeRepository
+                .findById(approvalDTO.getScholarshipTypeId())
+                .orElseThrow(() -> logicExceptionComponent.throwExceptionEntityNotFound("Course", approvalDTO.getScholarshipTypeId()));
+        StudentHasCourseId studentHasCourseId = new StudentHasCourseId()
+                .setStudentId(student.getId())
+                .setCourseId(course.getId());
+        StudentHasCourse studentHasCourse = studentHasCourseRepository
+                .findById(studentHasCourseId)
+                .orElseThrow(() -> logicExceptionComponent.throwExceptionEntityNotFound("StudentHasCourse", studentHasCourseId));
+        if (approvalDTO.getScholarshipApproval()) {
+            StudentStatus studentStatus = studentStatusRepository
+                    .findById(1L)
+                    .orElseThrow(() -> logicExceptionComponent.throwExceptionEntityNotFound("StudentStatus", 1L));
+            studentHasCourse.setStudentStatus(studentStatus);
+            studentHasCourse.setApplicationType(applicationType);
+            studentHasCourse.getCourse().setScholarshipCounter(scholarshipCounter - 1);
+        } else {
+            StudentStatus studentStatus = studentStatusRepository
+                    .findById(4L)
+                    .orElseThrow(() -> logicExceptionComponent.throwExceptionScholarshipDenied());
+            // buscar en el la bd el studentStatus rechado
+            studentHasCourse.setStudentStatus(studentStatus);
+            studentHasCourse.setApplicationType(applicationType);
         }
-        StudentHasCourseDTO studentHasCourseDTOUpdated = studentHasCourseCycleMapper.toDto(studentHasCourse, context);
+        StudentHasCourse studentHasCourseUpdated = studentHasCourseRepository.save(studentHasCourse);
+        StudentHasCourseDTO studentHasCourseDTOUpdated = studentHasCourseCycleMapper.toDto(studentHasCourseUpdated, context);
         return studentHasCourseDTOUpdated;
     }
 
@@ -142,13 +173,4 @@ public class StudentHasCourseServices {
         return studentHasCourseDTOList;
     }
 
-    public void delete(Long id){
-        Optional<StudentHasCourse> byIdOptional = studentHasCourseRepository.findById(id);
-        if (byIdOptional.isPresent()){
-            StudentHasCourse studentHasCourseToDelete = byIdOptional.get();
-            studentHasCourseRepository.delete(studentHasCourseToDelete);
-        } else {
-            logicExceptionComponent.throwExceptionEntityNotFound("studentHasCourse", id);
-        }
-    }
 }
