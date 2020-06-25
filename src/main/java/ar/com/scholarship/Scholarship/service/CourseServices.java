@@ -115,7 +115,7 @@ public class CourseServices {
         } return course;
     }
 
-    public List<CourseDTO> findByAvailablePlaces(CourseDTO courseDTO){
+    public List<CourseDTO> findByAvailablePlaces(){
         List<Course> openCourseList = courseRepository.findByAvailablePlaces();
         if (openCourseList.size() == 0)
             logicExceptionComponent.throwExceptionNotAvailableCourse();

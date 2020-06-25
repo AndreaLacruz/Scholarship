@@ -21,7 +21,7 @@ import java.util.Set;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({"id", "name","description", "course_category", "modality", "total_hours",  "price", "company", "places", "scholarship_places"})
+@JsonPropertyOrder({"id", "name","description", "category", "modality", "total_hours",  "price", "company", "places", "scholarship_places"})
 public class CourseDTO implements Serializable {
 
     private Long id;
@@ -64,7 +64,7 @@ public class CourseDTO implements Serializable {
     private ModalityDTO modality;
 
     @JsonIgnoreProperties({"courses"})
-    private CourseCategoryDTO courseCategory;
+    private CourseCategoryDTO category;
 
     @JsonIgnoreProperties({"courses"})
     private CompanyDTO company;

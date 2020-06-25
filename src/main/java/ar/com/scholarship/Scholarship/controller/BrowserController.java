@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -31,28 +29,31 @@ public class BrowserController {
         return ResponseEntity.ok(allCourses);
     }
 
+    // TODO recursividad infinita
     @GetMapping({"/companies/{companyId}", "/companies/{companyId}/"}) // http://localhost:8080/browse/companies/1
     public ResponseEntity getCoursesByCompany(@PathVariable Long companyId){
         List<CourseDTO> allCourses = courseServices.findByCompany(companyId);
         return ResponseEntity.ok(allCourses);
     }
 
-    @GetMapping({"/category/{categoryId}/company/{companyId}, /courses/category/{categoryId}/company/{companyId}/"})
-    // http://localhost:8080/browse/courses/category/1/company/1
+    // TODO no funciona la consulta en postman
+    @GetMapping({"/company/{companyId/category/{categoryId}", "/company/{companyId/category/{categoryId}"})
+    // http://localhost:8080/browse/company/1/category/1
     public ResponseEntity getCoursesByCompanyAndCategory(@PathVariable Long companyId, @PathVariable Long courseCategoryId){
         List<CourseDTO> allCourses = courseServices.findByCompanyAndCategory(companyId, courseCategoryId);
         return ResponseEntity.ok(allCourses);
     }
 
-    @GetMapping({"/studentStatus/{studentStatusId}, /studentStatus/{studentStatusId}/"}) // http://localhost:8080/browse/studentStatus/1
+    @GetMapping({"/studentStatus/{studentStatusId}", "/studentStatus/{studentStatusId}/"}) // http://localhost:8080/browse/studentStatus/1
     public ResponseEntity getCoursesByStudentStatus(@PathVariable Long studentStatusId){
         List<StudentHasCourseDTO> studentHasCourseDTOList = studentHasCourseServices.findByStudentStatus(studentStatusId);
         return  ResponseEntity.ok(studentHasCourseDTOList);
     }
 
+    // TODO recursividad infinita
     @GetMapping({"/openCourses", "/openCourses/"}) // http://localhost:8080/browse/openCourses/
-    public ResponseEntity getOpenPlacesCourses(@Valid @RequestBody CourseDTO courseDTO){
-        List<CourseDTO> courseDTOList = courseServices.findByAvailablePlaces(courseDTO);
+    public ResponseEntity getOpenPlacesCourses(){
+        List<CourseDTO> courseDTOList = courseServices.findByAvailablePlaces();
         return ResponseEntity.ok(courseDTOList);
     }
 

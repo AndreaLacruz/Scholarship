@@ -1,6 +1,5 @@
 package ar.com.scholarship.Scholarship.model.dto;
 
-import ar.com.scholarship.Scholarship.model.entity.*;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
@@ -16,7 +15,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({"id", "student","student_status_id", "course", "application_type_id", "course_has_finalized"})
+@JsonPropertyOrder({"id", "student","student_status", "course", "application_type", "course_has_finalized"})
 public class StudentHasCourseDTO {
 
 

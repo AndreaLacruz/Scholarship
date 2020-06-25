@@ -72,14 +72,15 @@ public class StudentHasCourseServices {
         return studentHasCourseDTOSaved;
     }
 
-    //TODO
 
-    public StudentHasCourseDTO saveApplicationByScholarship(studentHasCourseToSave){
-
-        StudentHasCourse studentHasCourseToSave = new StudentHasCourse();
-        studentHasCourseToSave.setId(2L);
-        studentHasCourseToSave.setCourseHasFinalized(false);
-
+    public StudentHasCourseDTO saveApplicationByScholarship(StudentHasCourse studentHasCourseToSave){
+        SocioEconomicStatus socioEconomicStatus = studentHasCourseToSave.getStudent().getSocioEconomicStatus();
+        if (socioEconomicStatus == null)
+            throw logicExceptionComponent.throwExceptionScholarshipDenied();
+        ApplicationType applicationType = applicationTypeRepository
+                .findById(2L)
+                .orElseThrow(()-> logicExceptionComponent.throwExceptionEntityNotFound("applicationType", 2L));
+        studentHasCourseToSave.setApplicationType(applicationType);
         StudentHasCourse studentHasCourseSaved = studentHasCourseRepository.save(studentHasCourseToSave);
         StudentHasCourseDTO studentHasCourseDTOSaved = studentHasCourseCycleMapper.toDto(studentHasCourseSaved,context);
         return studentHasCourseDTOSaved;
