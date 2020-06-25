@@ -14,16 +14,16 @@ import java.util.List;
 public interface CourseRepository extends JpaRepository<Course, Long> {
 
     @Query(value = "SELECT * FROM Course c WHERE c.course_category_id = :courseCategoryId", nativeQuery = true)
-    List<Course> findByCategory(@Param("courseCategoryId") Long categoryId);
+    Page<Course> findByCategory(@Param("courseCategoryId") Long categoryId, Pageable pageable);
 
     @Query(value = "SELECT * FROM Course c WHERE c.company_id = :companyId", nativeQuery = true)
-    List<Course> findByCompany(@Param("companyId") Long companyId);
+    Page<Course> findByCompany(@Param("companyId") Long companyId, Pageable pageable);
 
     @Query(value = "SELECT * FROM Course c WHERE c.openPlacesCounter > 0 OR c.scholarshipCounter > 0 ", nativeQuery = true)
-    List<Course> findByAvailablePlaces();
+    Page<Course> findByAvailablePlaces(Pageable pageable);
 
     @Query(value = "SELECT * FROM Course co WHERE co.company_id = :companyId AND co.course_category_id = :courseCategoryId", nativeQuery = true)
-    List<Course> findByCompanyAndCategory(@Param("companyId") Long companyId, @Param("courseCategoryId") Long categoryId);
+    Page<Course> findByCompanyAndCategory(@Param("companyId") Long companyId, @Param("courseCategoryId") Long categoryId, Pageable pageable);
 
     @Query(
             value = "SELECT c.* FROM Course c LEFT JOIN StudentHasCourse sc ON c.id = sc.course_id WHERE sc.StudentStatus_id = :studentStatusId GROUP BY c.id",

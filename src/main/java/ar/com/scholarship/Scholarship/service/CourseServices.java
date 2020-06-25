@@ -110,37 +110,49 @@ public class CourseServices {
         } return course;
     }
 
-    public List<CourseDTO> findByAvailablePlaces(){
-        List<Course> openCourseList = courseRepository.findByAvailablePlaces();
+    public List<CourseDTO> findByAvailablePlaces(Integer page){
+        PageRequest pageRequest = PageRequest.of(page, 5, Sort.Direction.ASC, "id");
+        Page<Course> allCoursesByPlaces = courseRepository.findByAvailablePlaces(pageRequest);
+
+        List<Course> openCourseList = allCoursesByPlaces.getContent();
         if (openCourseList.size() == 0)
             logicExceptionComponent.throwExceptionNotAvailableCourse();
         List<CourseDTO> openCourseListDto = courseCycleMapper.toDto(openCourseList, context);
         return openCourseListDto;
     }
 
-    public List<CourseDTO> findByCompany(Long companyId){
-        List<Course> courseListByCompany = courseRepository.findByCompany(companyId);
+    public List<CourseDTO> findByCompany(Long companyId, Integer page){
+        PageRequest pageRequest = PageRequest.of(page, 5, Sort.Direction.ASC, "id");
+        Page<Course> allCoursesByCompany = courseRepository.findByCompany(companyId, pageRequest);
+
+        List<Course> courseListByCompany = allCoursesByCompany.getContent();
         List<CourseDTO> courseDTOList = courseCycleMapper.toDto(courseListByCompany,context);
         return courseDTOList;
     }
 
-    public List<CourseDTO> findByCategory(Long categoryId){
-        List<Course> all = courseRepository.findByCategory(categoryId);
+    public List<CourseDTO> findByCategory(Long categoryId, Integer page){
+        PageRequest pageRequest = PageRequest.of(page, 5, Sort.Direction.ASC, "id");
+        Page<Course> allCoursesByCategory = courseRepository.findByCategory(categoryId, pageRequest);
+
+        List<Course> all = allCoursesByCategory.getContent();
         List<CourseDTO> courseDTOList = courseCycleMapper.toDto(all, context);
         return courseDTOList;
     }
 
-    public List<CourseDTO> findByCompanyAndCategory(Long companyId, Long categoryId){
-        List<Course> courseList = courseRepository.findByCompanyAndCategory(companyId, categoryId);
-        List<CourseDTO> courseDTOList = courseCycleMapper.toDto(courseList,context);
+    public List<CourseDTO> findByCompanyAndCategory(Long companyId, Long categoryId, Integer page){
+        PageRequest pageRequest = PageRequest.of(page, 5, Sort.Direction.ASC, "id");
+        Page<Course> allCoursesByCompanyAndCategory = courseRepository.findByCompanyAndCategory(categoryId, categoryId, pageRequest);
+
+        List<Course> all = allCoursesByCompanyAndCategory.getContent();
+        List<CourseDTO> courseDTOList = courseCycleMapper.toDto(all, context);
         return courseDTOList;
     }
 
     public List<CourseDTO> getAllCoursesByStudentStatusProgress(Long studentStatusId, Integer page) {
         PageRequest pageRequest = PageRequest.of(page, 5, Sort.Direction.ASC, "id");
-        Page<Course> allCoursesByStundetStatusProgressPage = courseRepository.findAllCoursesByStudentStatusProgress(studentStatusId, pageRequest);
-        List<Course> allCoursesByStundetStatusProgress = allCoursesByStundetStatusProgressPage.getContent();
-        List<CourseDTO> courseDTOList = courseCycleMapper.toDto(allCoursesByStundetStatusProgress, context);
+        Page<Course> allCoursesByStudentStatusProgressPage = courseRepository.findAllCoursesByStudentStatusProgress(studentStatusId, pageRequest);
+        List<Course> allCoursesByStudentStatusProgress = allCoursesByStudentStatusProgressPage.getContent();
+        List<CourseDTO> courseDTOList = courseCycleMapper.toDto(allCoursesByStudentStatusProgress, context);
         return courseDTOList;
     }
 }

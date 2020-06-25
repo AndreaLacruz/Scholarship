@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Optional;
 
@@ -158,7 +159,6 @@ public class StudentHasCourseServices {
             StudentStatus studentStatus = studentStatusRepository
                     .findById(4L)
                     .orElseThrow(() -> logicExceptionComponent.throwExceptionScholarshipDenied());
-            // buscar en el la bd el studentStatus rechado
             studentHasCourse.setStudentStatus(studentStatus);
             studentHasCourse.setApplicationType(applicationType);
         }
