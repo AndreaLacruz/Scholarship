@@ -26,7 +26,7 @@ public class AuthController {
     @Autowired @Qualifier("authServices")
     private AuthServices authServices;
 
-    @PostMapping ({"/login", "/login/"}) // localhost:8080/login
+    @PostMapping ({"/login", "/login/"}) // http://localhost:8080/login
     public ResponseEntity createAuthToken(@Valid @RequestBody JwtAuthRequestBody body){
         LOGGER.info(body.toString());
         String token = authServices.jwtNewToken(body);
