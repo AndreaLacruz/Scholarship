@@ -58,7 +58,7 @@ public class JwtAuthProvider {
         return Jwts.builder().setClaims(claims).setSubject(jwtUserDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(generateExpirationDate())
-                .signWith(SignatureAlgorithm.ES512, secretSeed)
+                .signWith(SignatureAlgorithm.HS512, secretSeed)
                 .compact();
     }
 
