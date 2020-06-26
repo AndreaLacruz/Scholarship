@@ -42,7 +42,9 @@ public class StudentDTO implements Serializable {
     @NotBlank(message = "address is required")
     private String address;
 
+    @JsonPropertyOrder({"student"})
     private SocioEconomicStatusDTO socioEconomicStatus;
+
 
 }
 

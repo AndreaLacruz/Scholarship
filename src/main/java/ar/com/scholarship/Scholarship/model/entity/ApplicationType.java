@@ -1,5 +1,6 @@
 package ar.com.scholarship.Scholarship.model.entity;
 
+import ar.com.scholarship.Scholarship.model.dto.ApplicationTypeDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,7 +17,7 @@ public class ApplicationType {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, length = 25)
+    @Column(nullable = false, length = 30)
     private String type;
 
     @OneToMany(mappedBy = "applicationType")
@@ -25,4 +26,5 @@ public class ApplicationType {
     public ApplicationType(String type) {
         this.type = type;
     }
+
 }

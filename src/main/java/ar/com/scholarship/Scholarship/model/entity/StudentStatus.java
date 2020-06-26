@@ -18,11 +18,10 @@ public class StudentStatus {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //Aprobado, rechazado, pendiente
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 40)
     private String status;
 
-    @OneToMany(mappedBy = "status")
+    @OneToMany(mappedBy = "studentStatus")
     private Set<StudentHasCourse> studentHasCourses;
 
     public StudentStatus(String status) {

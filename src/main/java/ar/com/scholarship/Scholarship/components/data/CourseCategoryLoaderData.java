@@ -41,6 +41,7 @@ public class CourseCategoryLoaderData implements ApplicationRunner {
                     new CourseCategory(7L, "Ingenieria"),
                     new CourseCategory(8L, "Servicios")
             );
-            categories.forEach(courseCategory -> categoryRepository.save(courseCategory));
+            categoryRepository.saveAll(categories);
+        }
     }
-}}
+}

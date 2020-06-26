@@ -9,14 +9,16 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
+import java.io.Serializable;
+import java.util.List;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-@JsonPropertyOrder({"id", "student","status", "course", "application_type", "course_full", "course_has_finalized"})
-public class StudentHasCourseDTO {
+@JsonPropertyOrder({"id", "student","student_status", "course", "application_type", "course_has_finalized"})
+public class StudentHasCourseDTO implements Serializable {
 
 
     private StudentDTO student;
@@ -25,6 +27,24 @@ public class StudentHasCourseDTO {
     @NotNull(message = "item filled is required")
     private Boolean courseHasFinalized;
 
-    private StudentStatusDTO status;
+    private Long studentStatusId;
+    private Long applicationTypeId;
+
+    private StudentStatusDTO studentStatus;
     private ApplicationTypeDTO applicationType;
+
+    public StudentHasCourseDTO setApplicationType(ApplicationTypeDTO applicationType) {
+        this.applicationType = applicationType;
+        return this;
+    }
 }
+
+/*
+{
+    "student_id": 9,
+    "course_id": 5,
+    "course_Has_Finalized": false,
+    "student_Status_id": 1,
+    "application_Type_id": 3,
+}
+*/

@@ -52,7 +52,7 @@ public class Course {
     private Modality modality;
 
     @ManyToOne
-    @JoinColumn(name = "CourseCategory_id")
+    @JoinColumn(name = "Course_Category_id")
     private CourseCategory category;
 
     @ManyToOne

@@ -10,6 +10,6 @@ import org.springframework.stereotype.Component;
 public interface ModalityRepository extends JpaRepository<Modality, Long> {
 
     @Modifying
-    @Query(value = "ALTER TABLE TypeCategoryCompany AUTO_INCREMENT = 1", nativeQuery = true)
+    @Query(value = "ALTER TABLE Modality AUTO_INCREMENT = 1", nativeQuery = true)
     void resetAutoincrementValue();
 }

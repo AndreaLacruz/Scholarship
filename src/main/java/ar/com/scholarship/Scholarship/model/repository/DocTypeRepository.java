@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface DocTypeRepository extends JpaRepository<DocType,Long> {
 
     @Modifying
-    @Query(value = "ALTER TABLE TypeCategoryCompany AUTO_INCREMENT = 1", nativeQuery = true)
+    @Query(value = "ALTER TABLE Doc_Type AUTO_INCREMENT = 1", nativeQuery = true)
     void resetAutoincrementValue();
 
 }

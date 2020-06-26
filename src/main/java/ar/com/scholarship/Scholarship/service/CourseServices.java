@@ -11,10 +11,14 @@ import ar.com.scholarship.Scholarship.model.repository.CourseRepository;
 import ar.com.scholarship.Scholarship.model.repository.ModalityRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+
 
 @Service("courseServices")
 public class CourseServices {
@@ -91,20 +95,6 @@ public class CourseServices {
         }
     }
 
-    public CourseDTO findByName(String name){
-        Optional<Course> byName = courseRepository.findByName(name);
-        CourseDTO courseDTO = null;
-        Long id = null;
-
-        if (byName.isPresent()){
-            Course courseByName = byName.get();
-            courseDTO = courseCycleMapper.toDto(courseByName, context);
-        } else {
-            logicExceptionComponent.throwExceptionEntityNotFound("Course", id);
-        }
-        return  courseDTO;
-    }
-
     public CourseDTO update(CourseDTO courseDTO, Long id){
         Optional<Course> byIdOptional = courseRepository.findById(id);
         CourseDTO course = null;
@@ -118,5 +108,51 @@ public class CourseServices {
         } else {
             logicExceptionComponent.throwExceptionEntityNotFound("Course", id);
         } return course;
+    }
+
+    public List<CourseDTO> findByAvailablePlaces(Integer page){
+        PageRequest pageRequest = PageRequest.of(page, 5, Sort.Direction.ASC, "id");
+        Page<Course> allCoursesByPlaces = courseRepository.findByAvailablePlaces(pageRequest);
+
+        List<Course> openCourseList = allCoursesByPlaces.getContent();
+        if (openCourseList.size() == 0)
+            logicExceptionComponent.throwExceptionNotAvailableCourse();
+        List<CourseDTO> openCourseListDto = courseCycleMapper.toDto(openCourseList, context);
+        return openCourseListDto;
+    }
+
+    public List<CourseDTO> findByCompany(Long companyId, Integer page){
+        PageRequest pageRequest = PageRequest.of(page, 5, Sort.Direction.ASC, "id");
+        Page<Course> allCoursesByCompany = courseRepository.findByCompany(companyId, pageRequest);
+
+        List<Course> courseListByCompany = allCoursesByCompany.getContent();
+        List<CourseDTO> courseDTOList = courseCycleMapper.toDto(courseListByCompany,context);
+        return courseDTOList;
+    }
+
+    public List<CourseDTO> findByCategory(Long categoryId, Integer page){
+        PageRequest pageRequest = PageRequest.of(page, 5, Sort.Direction.ASC, "id");
+        Page<Course> allCoursesByCategory = courseRepository.findByCategory(categoryId, pageRequest);
+
+        List<Course> all = allCoursesByCategory.getContent();
+        List<CourseDTO> courseDTOList = courseCycleMapper.toDto(all, context);
+        return courseDTOList;
+    }
+
+    public List<CourseDTO> findByCompanyAndCategory(Long companyId, Long categoryId, Integer page){
+        PageRequest pageRequest = PageRequest.of(page, 5, Sort.Direction.ASC, "id");
+        Page<Course> allCoursesByCompanyAndCategory = courseRepository.findByCompanyAndCategory(categoryId, categoryId, pageRequest);
+
+        List<Course> all = allCoursesByCompanyAndCategory.getContent();
+        List<CourseDTO> courseDTOList = courseCycleMapper.toDto(all, context);
+        return courseDTOList;
+    }
+
+    public List<CourseDTO> getAllCoursesByStudentStatusProgress(Long studentStatusId, Integer page) {
+        PageRequest pageRequest = PageRequest.of(page, 5, Sort.Direction.ASC, "id");
+        Page<Course> allCoursesByStudentStatusProgressPage = courseRepository.findAllCoursesByStudentStatusProgress(studentStatusId, pageRequest);
+        List<Course> allCoursesByStudentStatusProgress = allCoursesByStudentStatusProgressPage.getContent();
+        List<CourseDTO> courseDTOList = courseCycleMapper.toDto(allCoursesByStudentStatusProgress, context);
+        return courseDTOList;
     }
 }

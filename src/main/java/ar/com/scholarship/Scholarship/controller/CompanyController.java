@@ -9,6 +9,7 @@ import ar.com.scholarship.Scholarship.service.ManagerServices;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -33,6 +34,7 @@ public class CompanyController {
 
     //COMPANY
 
+
     @PostMapping({"/companies", "/companies/"}) // http://localhost:8080/companies
     public ResponseEntity addNewCompany(@Valid @RequestBody CompanyDTO companyDTO) throws URISyntaxException {
         CompanyDTO companyDTOSaved = companyServices.save(companyDTO);
@@ -53,11 +55,13 @@ public class CompanyController {
         return ResponseEntity.ok(companyById);
     }
 
+
     @DeleteMapping({"/companies/{id}", "/companies/{id}/"}) // http://localhost:8080/companies/1
-    public ResponseEntity deleteCompany(Long id){
+    public ResponseEntity deleteCompany(@PathVariable Long id){
         companyServices.delete(id);
         return ResponseEntity.noContent().build();
     }
+
 
     @PutMapping({"/companies/{id}", "/companies/{id}/"}) // http://localhost:8080/companies/1
     public ResponseEntity updateCompany(@Valid @RequestBody CompanyDTO companyDTO, Long id){
@@ -66,6 +70,7 @@ public class CompanyController {
     }
 
     //MANAGER
+
 
     @PostMapping({"/managers", "/managers/"}) // http://localhost:8080/managers
     public ResponseEntity addNewManager(@Valid @RequestBody ManagerDTO managerDTO) throws URISyntaxException{
@@ -86,8 +91,9 @@ public class CompanyController {
         return ResponseEntity.ok(managerDTO);
     }
 
+
     @DeleteMapping({"/managers/{id}", "/managers/{id}/"}) // http://localhost:8080/managers/1
-    public ResponseEntity deleteManager(Long id){
+    public ResponseEntity deleteManager(@PathVariable Long id){
         managerServices.delete(id);
         return ResponseEntity.noContent().build();
     }
@@ -99,6 +105,7 @@ public class CompanyController {
     }
 
     //COURSES
+
 
     @PostMapping({"/courses", "/courses/"}) // http://localhost:8080/courses
     public ResponseEntity addNewCourse(@Valid @RequestBody CourseDTO courseDTO) throws URISyntaxException{
@@ -114,17 +121,13 @@ public class CompanyController {
         return ResponseEntity.ok(all);
     }
 
-    @GetMapping({"/courses/{name}", "/courses/{name}/"}) // http://localhost:8080/managers/name
-    public ResponseEntity findCourseByName(@PathVariable String name){
-        CourseDTO courseDTO = courseServices.findByName(name);
-        return ResponseEntity.ok(courseDTO);
-    }
 
     @DeleteMapping({"/courses/{id}", "/courses/{id}/"}) // http://localhost:8080/courses/1
-    public ResponseEntity deleteCourses(Long id){
+    public ResponseEntity deleteCourses(@PathVariable Long id){
         courseServices.delete(id);
         return ResponseEntity.noContent().build();
     }
+
 
     @PutMapping({"/courses/{id}", "/courses/{id}/"}) // http://localhost:8080/courses/1
     public ResponseEntity updateCourse(@Valid @RequestBody CourseDTO courseDTO, Long id){

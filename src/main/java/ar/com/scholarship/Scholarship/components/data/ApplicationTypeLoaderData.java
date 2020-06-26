@@ -36,12 +36,13 @@ public class ApplicationTypeLoaderData implements ApplicationRunner {
 
             List<ApplicationType> typeList = Arrays.asList(
                     new ApplicationType("Full Aplicación"),
+                    new ApplicationType("En aprobación"),
                     new ApplicationType("Beca 100%"),
                     new ApplicationType("Beca 75%"),
                     new ApplicationType("Beca 50%"),
                     new ApplicationType("Beca 25%")
             );
-            typeList.forEach(applicationType -> applicationTypeRepository.save(applicationType));
+            applicationTypeRepository.saveAll(typeList);
         }
     }
 }

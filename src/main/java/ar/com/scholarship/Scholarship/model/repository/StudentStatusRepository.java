@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 public interface StudentStatusRepository extends JpaRepository<StudentStatus, Long> {
 
     @Modifying
-    @Query(value = "ALTER TABLE TypeCategoryCompany AUTO_INCREMENT = 1", nativeQuery = true)
+    @Query(value = "ALTER TABLE Student_Status AUTO_INCREMENT = 1", nativeQuery = true)
     void resetAutoincrementValue();
 
 

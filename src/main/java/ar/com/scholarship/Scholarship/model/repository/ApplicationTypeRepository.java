@@ -10,6 +10,6 @@ import org.springframework.stereotype.Component;
 public interface ApplicationTypeRepository extends JpaRepository<ApplicationType, Long> {
 
     @Modifying
-    @Query(value = "ALTER TABLE TypeCategoryCompany AUTO_INCREMENT = 1", nativeQuery = true)
+    @Query(value = "ALTER TABLE Application_Type AUTO_INCREMENT = 1", nativeQuery = true)
     void resetAutoincrementValue();
 }
