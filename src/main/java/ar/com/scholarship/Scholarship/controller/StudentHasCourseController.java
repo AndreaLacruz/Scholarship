@@ -20,8 +20,7 @@ public class StudentHasCourseController {
     private StudentHasCourseServices studentHasCourseServices;
 
     // http://localhost:8080/student/1/course/1
-
-
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping({"/student/{studentId}/course/{courseId}", "/student/{studentId}/course/{courseId}/"})
     public ResponseEntity addStudentToCourse(
             @Valid @RequestBody ApplicationCourseStudentDTO dto, @PathVariable Long studentId, @PathVariable Long courseId){
@@ -31,6 +30,7 @@ public class StudentHasCourseController {
 
 
     // http://localhost:8080/student/1/course/1/approval
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping({"/student/{studentId}/course/{courseId}/approval", "/student/{studentId}/course/{courseId}/approval/"})
     public ResponseEntity scholarshipApproval(
             @Valid @RequestBody ScholarshipApprovalDTO dto, @PathVariable Long studentId ,@PathVariable Long courseId){
@@ -39,6 +39,7 @@ public class StudentHasCourseController {
     }
 
     // http://localhost:8080/student/1/course/1/status-progress/
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping({"/student/{studentId}/course/{courseId}/status-progress/", "/student/{studentId}/course/{courseId}/status-progress/"})
     public ResponseEntity studentProgressUpdate(
             @Valid @RequestBody Long progressDTO, @PathVariable Long studentId, @PathVariable Long courseId){

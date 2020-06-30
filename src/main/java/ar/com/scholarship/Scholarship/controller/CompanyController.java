@@ -34,7 +34,7 @@ public class CompanyController {
 
     //COMPANY
 
-
+    @PreAuthorize("hasRole('MANAGER')")
     @PostMapping({"/companies", "/companies/"}) // http://localhost:8080/companies
     public ResponseEntity addNewCompany(@Valid @RequestBody CompanyDTO companyDTO) throws URISyntaxException {
         CompanyDTO companyDTOSaved = companyServices.save(companyDTO);
@@ -49,20 +49,21 @@ public class CompanyController {
         return ResponseEntity.ok(all);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping({"/companies/{id}", "/companies/{id}/"}) // http://localhost:8080/companies/1
     public ResponseEntity getCompanyById(@PathVariable Long id){
         CompanyDTO companyById = companyServices.findById(id);
         return ResponseEntity.ok(companyById);
     }
 
-
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping({"/companies/{id}", "/companies/{id}/"}) // http://localhost:8080/companies/1
     public ResponseEntity deleteCompany(@PathVariable Long id){
         companyServices.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-
+    @PreAuthorize("hasRole('MANAGER')")
     @PutMapping({"/companies/{id}", "/companies/{id}/"}) // http://localhost:8080/companies/1
     public ResponseEntity updateCompany(@Valid @RequestBody CompanyDTO companyDTO, Long id){
         CompanyDTO companyUpdated = companyServices.update(companyDTO, id);
@@ -71,7 +72,7 @@ public class CompanyController {
 
     //MANAGER
 
-
+    @PreAuthorize("hasRole('MANAGER')")
     @PostMapping({"/managers", "/managers/"}) // http://localhost:8080/managers
     public ResponseEntity addNewManager(@Valid @RequestBody ManagerDTO managerDTO) throws URISyntaxException{
         ManagerDTO managerDTOSaved = managerServices.save(managerDTO);
@@ -85,19 +86,21 @@ public class CompanyController {
         return ResponseEntity.ok(all);
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping({"/managers/{documentation}", "/managers/{documentation}/"}) // http://localhost:8080/managers/1
     public ResponseEntity findManagerByDni(@PathVariable Integer documentation){
         ManagerDTO managerDTO = managerServices.findManagerByDocumentation(documentation);
         return ResponseEntity.ok(managerDTO);
     }
 
-
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping({"/managers/{id}", "/managers/{id}/"}) // http://localhost:8080/managers/1
     public ResponseEntity deleteManager(@PathVariable Long id){
         managerServices.delete(id);
         return ResponseEntity.noContent().build();
     }
 
+    @PreAuthorize("hasRole('MANAGER')")
     @PutMapping({"/managers/{id}", "/managers/{id}/"}) // http://localhost:8080/managers/1
     public ResponseEntity updateManager(@Valid @RequestBody ManagerDTO managerDTO, Long id){
         ManagerDTO managerUpdated = managerServices.update(managerDTO, id);
@@ -106,7 +109,7 @@ public class CompanyController {
 
     //COURSES
 
-
+    @PreAuthorize("hasRole('MANAGER')")
     @PostMapping({"/courses", "/courses/"}) // http://localhost:8080/courses
     public ResponseEntity addNewCourse(@Valid @RequestBody CourseDTO courseDTO) throws URISyntaxException{
         CourseDTO courseDTOSaved = courseServices.save(courseDTO);
@@ -122,13 +125,14 @@ public class CompanyController {
     }
 
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping({"/courses/{id}", "/courses/{id}/"}) // http://localhost:8080/courses/1
     public ResponseEntity deleteCourses(@PathVariable Long id){
         courseServices.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-
+    @PreAuthorize("hasRole('MANAGER')")
     @PutMapping({"/courses/{id}", "/courses/{id}/"}) // http://localhost:8080/courses/1
     public ResponseEntity updateCourse(@Valid @RequestBody CourseDTO courseDTO, Long id){
         CourseDTO courseUpdated = courseServices.update(courseDTO, id);
