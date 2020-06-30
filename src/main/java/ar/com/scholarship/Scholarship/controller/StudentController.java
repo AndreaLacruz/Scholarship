@@ -29,7 +29,7 @@ public class StudentController {
 
     //STUDENT
 
-
+    @PreAuthorize("hasRole('USER')")
     @PostMapping({"/students", "/students/"}) // http://localhost:8080/students
     public ResponseEntity addNewStudent(@Valid @RequestBody StudentDTO studentDTO) throws URISyntaxException {
         StudentDTO studentDTOSaved = studentServices.save(studentDTO);
@@ -44,13 +44,14 @@ public class StudentController {
     }
 
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping({"/students/{id}", "/students/{id}/"}) // http://localhost:8080/students/1
     public ResponseEntity deleteStudent(Long id){
         studentServices.delete(id);
         return ResponseEntity.noContent().build();
     }
 
-
+    @PreAuthorize("hasRole('USER')")
     @PutMapping({"/students/{id}", "/students/{id}/"}) // http://localhost:8080/students/1
     public ResponseEntity updateStudent(@Valid @RequestBody StudentDTO studentDTO, Long id){
         StudentDTO studentUpdate = studentServices.update(studentDTO,id);
@@ -60,7 +61,7 @@ public class StudentController {
     // SOCIO ECONOMIC STATUS
 
 
-    @SneakyThrows
+    @SneakyThrows @PreAuthorize("hasRole('USER')")
     @PostMapping({"/socioEconomicStatus", "/socioEconomicStatus/"}) // http://localhost:8080/socioEconomicStatus
     public ResponseEntity addNewSocioEconomicStatus(@Valid @RequestBody SocioEconomicStatusDTO socioEconomicStatusDTO) throws URISyntaxException {
         SocioEconomicStatusDTO socioEconomicStatusDTOSaved = socioEconomicStatusServices.save(socioEconomicStatusDTO);
@@ -70,6 +71,7 @@ public class StudentController {
     }
 
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping({"/socioEconomicStatus/{id}", "/socioEconomicStatus/{id}/"}) // http://localhost:8080/socioEconomicStatus/1
     public ResponseEntity deleteSocioEconomicStatus(Long id){
         socioEconomicStatusServices.delete(id);
